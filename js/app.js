@@ -154,7 +154,7 @@ function loadArtist(mbid) {
 					}
 				} else if (artist['relations'][i]['type'] == 'social network') {
 					var url = artist['relations'][i]['url'];
-					var fb_match = /^http:\/\/www\.facebook\.com/;
+					var fb_match = /^http:\/\/www\.facebook\.com/.exec(url);
 					if (fb_match) {
 						artist['facebook'] = url;
 					}
