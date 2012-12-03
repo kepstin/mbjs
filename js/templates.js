@@ -292,7 +292,7 @@ var artistTemplate = jsontemplate.Template(
 				'<a href="https://twitter.com/{@|htmltag}" class="twitter-follow-button" data-show-count="true" data-dnt="true">Follow @{@|html}</a>' +
 			'{.end}' +
 			'{.section facebook}' +
-				'<div class="fb-like" data-layout="button_count" data-show-faces="false" data-href="{@|htmltag}"></div>' +
+				'<div class="fb-subscribe" data-show-faces="false" data-href="{@|htmltag}"></div>' +
 			'{.end}' +
 			'{.section wikipedia}' +
 				'{@}' +
