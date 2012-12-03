@@ -5914,38 +5914,43 @@ table.hide-for-medium {
   font-size: 17px;
 }
 
-/* line 77, ../sass/app.scss */
+/* line 75, ../sass/app.scss */
+.fb-subscribe span {
+  height: 24px !important;
+}
+
+/* line 79, ../sass/app.scss */
 .tracklist .tracklist-header {
   font-weight: bold;
   padding-bottom: 4px;
 }
-/* line 82, ../sass/app.scss */
+/* line 84, ../sass/app.scss */
 .tracklist .track {
   border-top: 1px solid #DDDDDD;
   padding-bottom: 4px;
   padding-top: 4px;
 }
-/* line 86, ../sass/app.scss */
+/* line 88, ../sass/app.scss */
 .tracklist .track .track_number, .tracklist .track .track_length {
   text-align: right;
 }
 
-/* line 92, ../sass/app.scss */
+/* line 94, ../sass/app.scss */
 .credits {
   margin-bottom: 17px;
 }
 
-/* line 96, ../sass/app.scss */
+/* line 98, ../sass/app.scss */
 header, header.row {
   margin-bottom: 17px;
 }
 
-/* line 100, ../sass/app.scss */
+/* line 102, ../sass/app.scss */
 sup {
   font-size: 60%;
 }
 
-/* line 103, ../sass/app.scss */
+/* line 105, ../sass/app.scss */
 dl dt {
   font-weight: bold;
   display: inline-block;
