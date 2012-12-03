@@ -1,5 +1,7 @@
 var rl = new RateLimiter();
 
+var basePath = "/home/cwalton/Development/mbjs/index.html";
+
 function loadingScreen() {
 	$('#body').html('<h1>Loading from MusicBrainz webservice…</h1>');
 }
@@ -158,6 +160,8 @@ function loadArtist(mbid) {
 					if (fb_match) {
 						artist['facebook'] = url;
 					}
+				} else if (artist['relations'][i]['type'] == 'image') {
+					artist['image'] = artist['relations'][i]['url'];
 				}
 			}
 			if (bandmembers.length > 0) {
@@ -307,6 +311,7 @@ function loadReleaseGroup(mbid) {
 }
 
 function loadPage(state) {
+	console.log(state);
 	history.replaceState(state, '', window.location.pathname + state['search']);
 	var body;
 	if (!state['search']) {
@@ -373,7 +378,23 @@ function fixupLinks() {
 	FB.XFBML.parse();
 }
 
+/* Generate a history "state" object from current browser state */
+function generateState() {
+	var path = [];
+	var pathname = window.location.pathname;
+	/*if (pathname.indexOf(basePath) === 0) {
+		pathname = pathname.slice(basePath.length);
+	}*/
+	var path = pathname.split('/');
+	return {
+		path: path,
+		scrollX: window.scrollX,
+		scrollY: window.scrollY
+	};
+}
+
 $(document).ready(function() {
+	console.log(generateState());
 	if (window.location.search.charAt(0) == '?') {
 		var state = parseState(window.location.search);
 		loadPage(state);

@@ -28,7 +28,7 @@ function formatRecordingTime(t) {
 	var hours = Math.floor(t / 60 / 60);
 	if (minutes > 0 && seconds < 10) { seconds = '0' + seconds }
 	if (hours > 0 && minutes < 10) { minutes = '0' + minutes }
-	return (hours > 0 ? hours + ':' : '') + (minutes > 0 ? minutes + ':' : '') + seconds;
+	return (hours > 0 ? hours + ':' : '') + minutes + ':' + seconds;
 }
 
 var artistCreditTemplate = jsontemplate.Template(
@@ -43,32 +43,32 @@ function formatArtistCredit(ac) { return artistCreditTemplate.expand(ac); }
 
 var releaseTemplate = jsontemplate.Template(
 	'<div class="row">' +
-		'<ul class="breadcrumbs">' +
-			'<li>' +
-				'{release-group.artist-credit|artist-credit}' +
-			'</li>' +
-			'<li>' +
-				'{release-group|release-group-link}' +
-			'</li>' +
-			'<li class="current">' +
-				'{@|release-link}' +
-			'</li>' +
-		'</ul>' +
-	'</div>' +
-	'<div class="row page-header">' +
-		'<div class="three columns">' +
-			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/release/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
-			'</div>' +
+		'<div class="twelve columns">' +
+			'<ul class="breadcrumbs">' +
+				'<li>' +
+					'{release-group.artist-credit|artist-credit}' +
+				'</li>' +
+				'<li>' +
+					'{release-group|release-group-link}' +
+				'</li>' +
+				'<li class="current">' +
+					'{@|release-link}' +
+				'</li>' +
+			'</ul>' +
 		'</div>' +
+	'</div>' +
+	'<header class="row">' +
 		'<div class="nine columns">' +
 			'<h1>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
 					' <small>({@|html})</small>' +
 				'{.end}' +
+				'<br>' +
+				'<small>' +
+					'{artist-credit|artist-credit}' +
+				'</small>' +
 			'</h1>' +
-			'<h2>by {artist-credit|artist-credit}</h2>' +
 			'{@|medium-count}, ' +
 			'{@|track-count} tracks, ' +
 			'{.section date}{@|html}, {.end}' +
@@ -90,7 +90,13 @@ var releaseTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-	'</div>' +
+		'<div class="three columns">' +
+			'<div class="cover-art">' +
+				'<img src="http://coverartarchive.org/release/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+			'</div>' +
+		'</div>' +
+
+	'</header>' +
 	'{.repeated section media}' +
 		'<div class="row">' +
 			'<h3>' +
@@ -168,36 +174,40 @@ function formatTrackCount(r) {
 
 var releaseTileTemplate = jsontemplate.Template(
 	'<div class="row release-tile">' +
-		'<div class="three columns">' +
+		'<div class="three mobile-one columns">' +
 			'<div class="cover-art">' +
 				'<img src="http://coverartarchive.org/release/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
-		'<div class="nine columns">' +
+		'<div class="nine mobile-three columns">' +
 			'<h3>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
 					' <small>({@|html})</small>' +
 				'{.end}' +
 			'</h3>' +
-			'<h4>by {artist-credit|artist-credit}</h4>' +
-			'{@|medium-count}, ' +
-			'{@|track-count} tracks, ' +
-			'{.section date}{@|html}, {.end}' +
-			'{.section country}{@|html}{.end}<br>' +
-			'{.repeated section label-info} ' +
-				'{.section label}' +
-					'{@|label-link}' +
-				'{.end} – ' +
-				'{.section catalog-number}' +
-					'{@|html}' +
+			'<h4>' +
+				'{artist-credit|artist-credit}' +
+			'</h4>' +
+			'<p>' +
+				'{@|medium-count}, ' +
+				'{@|track-count} tracks, ' +
+				'{.section date}{@|html}, {.end}' +
+				'{.section country}{@|html}{.end}<br>' +
+				'{.repeated section label-info} ' +
+					'{.section label}' +
+						'{@|label-link}' +
+					'{.end} – ' +
+					'{.section catalog-number}' +
+						'{@|html}' +
+					'{.end}' +
+				'{.alternates with}' +
+					'<br>' +
 				'{.end}' +
-			'{.alternates with}' +
-				'<br>' +
-			'{.end}' +
-			'{.section barcode}' +
-				'<br>{@|html}' +
-			'{.end}' +
+				'{.section barcode}' +
+					'<br>{@|html}' +
+				'{.end}' +
+			'</p>' +
 		'</div>' +
 	'</div>',
 templateOptions);
@@ -205,53 +215,53 @@ function formatReleaseTile(r) { return releaseTileTemplate.expand(r); }
 
 var releaseGroupTileTemplate = jsontemplate.Template(
 	'<div class="row release-group-tile">' +
-		'<div class="three columns">' +
+		'<div class="three mobile-one columns">' +
 			'<div class="cover-art">' +
 				'<img src="http://coverartarchive.org/beta/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
-		'<div class="nine columns">' +
+		'<div class="nine mobile-three columns">' +
 			'<h3>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
 					' <small>({@|html})</small>' +
 				'{.end}' +
+				'{.section primary-type}' +
+					' <span class="label">' +
+						'{@|html}' +
+					'</span>' +
+				'{.end}' +
+				'{.repeated section secondary-types}' +
+					' <span class="secondary label">' +
+						'{@|html}' +
+					'</span>' +
+				'{.end}' +
 			'</h3>' +
 			'<h4>' +
-				'{.section primary-type}' +
-					'{@|html}' +
-				'{.or}' +
-					'Unknown' +
-				'{.end}' +
-				'{.section secondary-types}' +
-					' + ' +
-					'{.repeated section @}' +
-						'{@|html}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
-				'{.end}' +
-				'<br>' +
-				' by ' +
 				'{artist-credit|artist-credit}' +
-				'{.section first-release-date}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
 			'</h4>' +
+			/*'<p>' +
+				'{.section first-release-date}' +
+					'{@|html}' +
+				'{.end}' +
+			'</p>' +*/
 		'</div>' +
-	'</div>' +
-	'',
+	'</div>',
 	templateOptions
 );
 function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); }
 
 var artistTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'<header id="page-header">' +
+	'<header class="row">' +
+		'{.section image}' +
+			'<div class="nine mobile-three columns">' +
+		'{.or}' +
+			'<div class="twelve columns">' +
+		'{.end}' +
 			'<h1>' +
 				'{@|artist-link}' +
 			'</h1>' +
-			'<h2>' +
+			'<p>' +
 				'{.section type}' +
 					'{type|html}' +
 				'{.or}' +
@@ -264,11 +274,11 @@ var artistTemplate = jsontemplate.Template(
 					', {@|html}' +
 				'{.end}' +
 				'{.section life-span}' +
-					' <small>(' +
+					', ' +
 					'{.section begin}' +
 						'{@|html}' +
 					'{.end}' +
-					' – ' +
+					'–' +
 					'{.section end}' +
 						'{@|html}' +
 					'{.or}' +
@@ -276,9 +286,8 @@ var artistTemplate = jsontemplate.Template(
 							'?' +
 						'{.end}' +
 					'{.end}' +
-					')</small>' +
 				'{.end}' +
-			'</h2>' +
+			'</p>' +
 			'{.section twitter}' +
 				'<a href="https://twitter.com/{@|htmltag}" class="twitter-follow-button" data-show-count="true" data-dnt="true">Follow @{@|html}</a>' +
 			'{.end}' +
@@ -291,68 +300,83 @@ var artistTemplate = jsontemplate.Template(
 			'{.section annotation}' +
 				'<p>{@|html}</p>' +
 			'{.end}' +
-			'{.section band-members}' +
-				'<p><b>Members:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+			'<div class="credits">' +
+				'{.section band-members}' +
+					'<div class="credit">' +
+						'<b>Members:</b> ' +
+						'{.repeated section artists}' +
+							'{@|artist-link}' +
+						'{.alternates with}' +
+							', ' +
+						'{.end}' +
+					'</div>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-			'{.section member-of}' +
-				'<p><b>Member of:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+				'{.section member-of}' +
+					'<div class="credit">' +
+						'<b>Member of:</b> ' +
+						'{.repeated section artists}' +
+							'{@|artist-link}' +
+						'{.alternates with}' +
+							', ' +
+						'{.end}' +
+					'</div>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-			'{.section voiced-by}' +
-				'<p><b>Voiced by:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+				'{.section voiced-by}' +
+					'<p><b>Voiced by:</b> ' +
+					'{.repeated section artists}' +
+						'{@|artist-link}' +
+					'{.alternates with}' +
+						', ' +
+					'{.end}' +
+					'</p>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-			'{.section voice-of}' +
-				'<p><b>Voice of:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+				'{.section voice-of}' +
+					'<p><b>Voice of:</b> ' +
+					'{.repeated section artists}' +
+						'{@|artist-link}' +
+					'{.alternates with}' +
+						', ' +
+					'{.end}' +
+					'</p>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-			'{.section legal-name}' +
-				'<p><b>Legal name:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+				'{.section legal-name}' +
+					'<p><b>Legal name:</b> ' +
+					'{.repeated section artists}' +
+						'{@|artist-link}' +
+					'{.alternates with}' +
+						', ' +
+					'{.end}' +
+					'</p>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-			'{.section performs-as}' +
-				'<p><b>Performs as:</b> ' +
-				'{.repeated section artists}' +
-					'{@|artist-link}' +
-				'{.alternates with}' +
-					', ' +
+				'{.section performs-as}' +
+					'<p><b>Performs as:</b> ' +
+					'{.repeated section artists}' +
+						'{@|artist-link}' +
+					'{.alternates with}' +
+						', ' +
+					'{.end}' +
+					'</p>' +
 				'{.end}' +
-				'</p>' +
-			'{.end}' +
-		'</header>' +
-		'<ul class="block-grid two-up">' +
-			'{.repeated section release-groups}' +
-				'<li>' +
-					'{@|release-group-tile}' +
-				'</li>' +
-			'{.end}' +
-		'</ul>' +
+			'</div>' +
+		'</div>' +
+		'{.section image}' +
+			'<div class="three mobile-one columns">' +
+				'<div class="artist-image">' +
+					'<img src="{image|htmltag}" alt="">' +
+				'</div>' +
+			'</div>' +
+		'{.end}' +
+	'</header>' +
+	'<div class="row">' +
+		'<div class="twelve columns">' +
+			'<ul class="block-grid two-up mobile">' +
+				'{.repeated section release-groups}' +
+					'<li>' +
+						'{@|release-group-tile}' +
+					'</li>' +
+				'{.end}' +
+			'</ul>' +
+		'</div>' +
 	'</div>',
 templateOptions);
 
@@ -365,48 +389,38 @@ templateOptions);
 
 var releaseGroupTemplate = jsontemplate.Template(
 	'<div class="row">' +
-		'<ul class="breadcrumbs">' +
-			'<li>' +
-				'{artist-credit|artist-credit}' +
-			'</li>' +
-			'<li class="current">' +
-				'{@|release-group-link}' +
-			'</li>' +
-		'</ul>' +
-	'</div>' +
-	'<div class="row page-header">' +
-		'<div class="three columns">' +
-			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/beta/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
-			'</div>' +
+		'<div class="twelve columns">' +
+			'<ul class="breadcrumbs">' +
+				'<li>' +
+					'{artist-credit|artist-credit}' +
+				'</li>' +
+				'<li class="current">' +
+					'{@|release-group-link}' +
+				'</li>' +
+			'</ul>' +
 		'</div>' +
+	'</div>' +
+	'<header class="row">' +
 		'<div class="nine columns">' +
 			'<h1>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
 					' <small>({@|html})</small>' +
 				'{.end}' +
-			'</h1>' +
-			'<h2>' +
 				'{.section primary-type}' +
-					'{@|html}' +
-				'{.or}' +
-					'Unknown' +
-				'{.end}' +
-				'{.section secondary-types}' +
-					' + ' +
-					'{.repeated section @}' +
+					' <span class="label">' +
 						'{@|html}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
+					'</span>' +
+				'{.end}' +
+				'{.repeated section secondary-types}' +
+					' <span class="secondary label">' +
+						'{@|html}' +
+					'</span>' +
 				'{.end}' +
 				'<br>' +
-				' by ' +
-				'{artist-credit|artist-credit}' +
-				'{.section first-release-date}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
+				'<small>' +
+					'{artist-credit|artist-credit}' +
+				'</small>' +
 			'</h2>' +
 			'{.section wikipedia}' +
 				'{@}' +
@@ -415,43 +429,50 @@ var releaseGroupTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-	'</div>' +
+		'<div class="three columns">' +
+			'<div class="cover-art">' +
+				'<img src="http://coverartarchive.org/beta/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+			'</div>' +
+		'</div>' +
+	'</header>' +
 	'<div class="row">' +
-		'<ul class="block-grid two-up">' +
-			'{.repeated section releases}' +
-				'<li>' +
-					'{@|release-tile}' +
-				'</li>' +
-			'{.end}' +
-		'</ul>' +
+		'<div class="twelve columns">' +
+			'<ul class="block-grid two-up">' +
+				'{.repeated section releases}' +
+					'<li>' +
+						'{@|release-tile}' +
+					'</li>' +
+				'{.end}' +
+			'</ul>' +
+		'</div>' +
 	'</div>',
 templateOptions);
 
 var layoutTemplate = jsontemplate.Template(
-	'<div class="container">' +
-		'<nav id="navbar" class="row">' +
-			'<div class="four columns">' +
-				'<h1>' +
-					'<a href="">MB JS Demo</a>' +
-				'</h1>' +
-			'</div>' +
-		'</nav>' +
-		'{body|raw}' +
-		'<footer class="row">' +
-			'<div class="twelve columns">' +
-				'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
-			'</div>' +
-		'</footer>' +
-	'</div>'
+	'<nav class="top-bar">' +
+		'<ul>' +
+			'<li class="name">' +
+				'<h1><a href="">MB JS Demo</a></h1>' +
+			'</li>' +
+		'</ul>' +
+	'</nav>' +
+	'{body|raw}' +
+	'<footer class="row">' +
+		'<div class="twelve columns">' +
+			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
+		'</div>' +
+	'</footer>'
 );
 
 var indexTemplate = jsontemplate.Template(
 	'<div class="row">' +
-		'<header id="page-header" class="page-header">' +
-		'<h1>Magic Javascript MusicBrainz site thing.</h1>' +
-		'</header>' +
-		'<p>This page exists as a tech demo. It will load pages from the MusicBrainz webservice, then format them into page templates in Javascript. The idea is to see how much you can do nowadays with a “static” HTML page by itself.</p>' +
-		'<p>Try adding a “?release-group=mbid” or “?release=mbid” query parameter. Or <a href="?release-group=d288b7b2-5f6b-4343-ab51-2a8c754ee02a">follow this link</a> or <a href="?release=bef90838-a09d-4853-ae85-6314d3ab5a4b">this link</a>, for an example.</p>' +
+		'<div class="twelve columns">' +
+			'<header id="page-header" class="page-header">' +
+			'<h1>Magic Javascript MusicBrainz site thing.</h1>' +
+			'</header>' +
+			'<p>This page exists as a tech demo. It will load pages from the MusicBrainz webservice, then format them into page templates in Javascript. The idea is to see how much you can do nowadays with a “static” HTML page by itself.</p>' +
+			'<p>Try adding a “?release-group=mbid” or “?release=mbid” query parameter. Or <a href="?release-group=d288b7b2-5f6b-4343-ab51-2a8c754ee02a">follow this link</a> or <a href="?release=bef90838-a09d-4853-ae85-6314d3ab5a4b">this link</a>, for an example.</p>' +
+		'</div>' +
 	'</div>'
 );
 
