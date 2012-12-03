@@ -1,7 +1,5 @@
 var rl = new RateLimiter();
 
-var basePath = "/home/cwalton/Development/mbjs/index.html";
-
 function loadingScreen() {
 	$('#body').html('<h1>Loading from MusicBrainz webservice…</h1>');
 }
