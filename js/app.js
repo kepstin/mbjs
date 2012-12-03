@@ -155,8 +155,11 @@ function loadArtist(mbid) {
 				} else if (artist['relations'][i]['type'] == 'social network') {
 					var url = artist['relations'][i]['url'];
 					var fb_match = /^http:\/\/www\.facebook\.com/.exec(url);
+					var gplus_match = /^https:\/\/plus.google.com/.exec(url);
 					if (fb_match) {
 						artist['facebook'] = url;
+					} else if (gplus_match) {
+						artist['gplus'] = url;
 					}
 				} else if (artist['relations'][i]['type'] == 'image') {
 					artist['image'] = artist['relations'][i]['url'];
@@ -374,6 +377,7 @@ function fixupLinks() {
 	});
 	twttr.widgets.load();
 	FB.XFBML.parse();
+	gapi.plus.go();
 }
 
 /* Generate a history "state" object from current browser state */

@@ -294,6 +294,9 @@ var artistTemplate = jsontemplate.Template(
 			'{.section facebook}' +
 				'<div class="fb-subscribe" data-show-faces="false" data-href="{@|htmltag}"></div>' +
 			'{.end}' +
+			'{.section gplus}' +
+				'<div class="g-plus" data-height="69" data-href="{@|htmltag}"></div>' +
+			'{.end}' +
 			'{.section wikipedia}' +
 				'{@}' +
 			'{.end}' +
