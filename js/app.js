@@ -73,7 +73,7 @@ function getWikiText(o, callback) {
 		prop:    'text',
 		format:  'json',
 		/* section: 0, */
-		page:     decodeURIComponent(wikiLink['file']),
+		page:     decodeURIComponent(wikiLink['path'].slice(6)),
 	}, function (data) {
 		console.log(data);
 		
