@@ -217,7 +217,7 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 	'<div class="row release-group-tile">' +
 		'<div class="three mobile-one columns">' +
 			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/beta/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
 		'<div class="nine mobile-three columns">' +
@@ -434,7 +434,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 		'</div>' +
 		'<div class="three columns">' +
 			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/beta/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
 	'</header>' +
