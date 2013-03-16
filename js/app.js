@@ -1,4 +1,5 @@
 var rl = new RateLimiter();
+var wsAddr = 'http://mbjs.kepstin.ca/ws/2';
 
 function loadingScreen() {
 	$('#body').html('<h1>Loading from MusicBrainz webservice…</h1>');
@@ -73,7 +74,7 @@ function getWikiText(o, callback) {
 		prop:    'text',
 		format:  'json',
 		/* section: 0, */
-		page:     decodeURIComponent(wikiLink['file']),
+		page:     decodeURIComponent(wikiLink['path'].slice(6)),
 	}, function (data) {
 		console.log(data);
 		
@@ -116,7 +117,7 @@ function coverArtMissing(image) {
 function loadArtist(mbid) {
 	loadingScreen();
 	rl.queue(function() {
-		$.get('http://musicbrainz.org/ws/2/artist/' + mbid, {
+		$.get(wsAddr + '/artist/' + mbid, {
 			fmt: 'json',
 			inc: 'url-rels+artist-rels+annotation',
 		}, function (artist) {
@@ -201,7 +202,7 @@ function loadArtist(mbid) {
 				artist['wikipedia'] = wikiText;
 				
 				rl.queue(function() {
-					$.get('http://musicbrainz.org/ws/2/release-group', {
+					$.get(wsAddr + '/release-group', {
 						artist: artist['id'],
 						inc:    'artist-credits',
 						limit:  100,
@@ -247,9 +248,9 @@ function loadArtist(mbid) {
 function loadRelease(mbid) {
 	loadingScreen();
 	rl.queue(function() {
-		$.get('http://musicbrainz.org/ws/2/release/' + mbid, {
+		$.get(wsAddr + '/release/' + mbid, {
 			inc: 'artist-credits+labels+discids+recordings+release-groups+annotation',
-			fms: 'json'
+			fmt: 'json'
 		}, function (release) {
 			for (var i = 0; i < release['media'].length; ++i) {
 				release['media'][i]['number'] = i + 1;
@@ -268,7 +269,7 @@ function loadRelease(mbid) {
 function loadReleaseGroup(mbid) {
 	loadingScreen();
 	rl.queue(function() {
-		$.get('http://musicbrainz.org/ws/2/release-group/' + mbid, {
+		$.get(wsAddr + '/release-group/' + mbid, {
 			inc: 'artist-credits+url-rels+annotation',
 			fmt: 'json',
 		}, function (rg) {
@@ -277,7 +278,7 @@ function loadReleaseGroup(mbid) {
 			getWikiText(rg, function (wikiText) {
 				rg['wikipedia'] = wikiText;
 				rl.queue(function() {
-					$.get('http://musicbrainz.org/ws/2/release', {
+					$.get(wsAddr + '/release', {
 						'release-group': rg['id'],
 						inc:             'artist-credits+media+labels',
 						limit:           100,
