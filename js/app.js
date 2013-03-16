@@ -128,6 +128,14 @@ function loadArtist(mbid) {
 			var performsas = [];
 			var voicedby = [];
 			var voiceof = [];
+			var oembeds = [];
+			for (var i = 0; i < artist['relations'].length; ++i) {
+				if (artist['relations'][i]['url']) {
+					/* TODO: Check if we *can* oembed this somehow */
+					oembeds.push(artist['relations'][i]['url']['resource']);
+				}
+			}
+
 			for (var i = 0; i < artist['relations'].length; ++i) {
 				if (artist['relations'][i]['type'] == 'member of band') {
 					if (artist['relations'][i]['direction'] == 'backward') {
@@ -183,6 +191,9 @@ function loadArtist(mbid) {
 			}
 			if (performsas.length > 0) {
 				artist['performs-as'] = {artists: performsas};
+			}
+			if (oembeds.length > 0) {
+				artist['oembeds'] = { urls: oemebeds };
 			}
 
 			console.log(artist);
@@ -379,6 +390,11 @@ function fixupLinks() {
 	twttr.widgets.load();
 	FB.XFBML.parse();
 	gapi.plus.go();
+	renderOembed();
+}
+
+function renderOembed() {
+	$('.oembed').oembed(null, {embedMethod: 'auto'});
 }
 
 /* Generate a history "state" object from current browser state */
