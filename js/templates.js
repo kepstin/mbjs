@@ -288,13 +288,6 @@ var artistTemplate = jsontemplate.Template(
 					'{.end}' +
 				'{.end}' +
 			'</p>' +
-			'{.section oembeds}' +
-				'{.repeated section urls}' +
-					'<div class="oembed-container">' +
-						'<a href="{@|htmltag}" class="oembed">{@|html}</a>' +
-					'</div>' +
-				'{.end}' +
-			'{.end}' +
 			'{.section twitter}' +
 				'<a href="https://twitter.com/{@|htmltag}" class="twitter-follow-button" data-show-count="true" data-dnt="true">Follow @{@|html}</a>' +
 			'{.end}' +
