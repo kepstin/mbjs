@@ -58,7 +58,7 @@ function getWikiText(o, callback) {
 	var wikiLink;
 	for (var i = 0; i < o['relations'].length; ++i) {
 		if (o['relations'][i]['type'] == 'wikipedia') {
-			wikiLink = parseURL(o['relations'][i]['url']);
+			wikiLink = parseURL(o['relations'][i]['url']['resource']);
 			break;
 		}
 	}
@@ -148,13 +148,13 @@ function loadArtist(mbid) {
 						performsas.push(artist['relations'][i]['artist']);
 					}
 				} else if (artist['relations'][i]['type'] == 'microblog') {
-					var url = artist['relations'][i]['url'];
+					var url = artist['relations'][i]['url']['resource'];
 					var twitter_match = /^http:\/\/twitter\.com\/(.*)/.exec(url)
 					if (twitter_match) {
 						artist['twitter']  = twitter_match[1];
 					}
 				} else if (artist['relations'][i]['type'] == 'social network') {
-					var url = artist['relations'][i]['url'];
+					var url = artist['relations'][i]['url']['resource'];
 					var fb_match = /^http:\/\/www\.facebook\.com/.exec(url);
 					var gplus_match = /^https:\/\/plus.google.com/.exec(url);
 					if (fb_match) {
@@ -163,7 +163,7 @@ function loadArtist(mbid) {
 						artist['gplus'] = url;
 					}
 				} else if (artist['relations'][i]['type'] == 'image') {
-					artist['image'] = artist['relations'][i]['url'];
+					artist['image'] = artist['relations'][i]['url']['resource'];
 				}
 			}
 			if (bandmembers.length > 0) {
