@@ -193,7 +193,7 @@ function loadArtist(mbid) {
 				artist['performs-as'] = {artists: performsas};
 			}
 			if (oembeds.length > 0) {
-				artist['oembeds'] = { urls: oemebeds };
+				artist['oembeds'] = { urls: oembeds };
 			}
 
 			console.log(artist);
