@@ -114,6 +114,27 @@ function coverArtMissing(image) {
 	image.src = "http://mbjs.kepstin.ca/images/missingart.png";
 }
 
+function releaseOrder(a, b) {
+	if (!a['date']) {
+		if (!b['date']) {
+			return 0;
+		} else {
+			return 1;
+		}
+	} else {
+		if (!b['date']) {
+			return -1;
+		}
+	}
+	if (a['date'] < b['date']) {
+		return -1;
+	} else if (a['date'] > b['date']) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 function loadArtist(mbid) {
 	loadingScreen();
 	rl.queue(function() {
@@ -291,26 +312,7 @@ function renderRecording(recording) {
 	recording['releases'] = recording['releases'].filter(function (r) {
 		return (r['status'] != "Pseudo-Release");
 	});
-	recording['releases'].sort(function (a,b) {
-		if (!a['date']) {
-			if (!b['date']) {
-				return 0;
-			} else {
-				return 1;
-			}
-		} else {
-			if (!b['date']) {
-				return -1;
-			}
-		}
-		if (a['date'] < b['date']) {
-			return -1;
-		} else if (a['date'] > b['date']) {
-			return 1;
-		} else {
-			return 0;
-		}
-	});
+	recording['releases'].sort(releaseOrder);
 	console.log(recording);
 	renderLayout(recordingTemplate.expand(recording));
 }
@@ -347,26 +349,7 @@ function loadReleaseGroup(mbid) {
 							return (r['status'] != "Pseudo-Release");
 						});
 					
-						rg['releases'].sort(function (a,b) {
-							if (!a['date']) {
-								if (!b['date']) {
-									return 0;
-								} else {
-									return 1;
-								}
-							} else {
-								if (!b['date']) {
-									return -1;
-								}
-							}
-							if (a['date'] < b['date']) {
-								return -1;
-							} else if (a['date'] > b['date']) {
-								return 1;
-							} else {
-								return 0;
-							}
-						});
+						rg['releases'].sort(releaseOrder);
 						$('body').html(layoutTemplate.expand({
 							body: releaseGroupTemplate.expand(rg)
 						}));
