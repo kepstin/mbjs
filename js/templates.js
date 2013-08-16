@@ -5,12 +5,14 @@ var templateOptions = {
 		'release-link': formatReleaseLink,
 		'release-group-link': formatReleaseGroupLink,
 		'label-link': formatLabelLink,
+		'recording-link': formatRecordingLink,
 		'artist-credit': formatArtistCredit,
 		'release-tile': formatReleaseTile,
 		'release-group-tile': formatReleaseGroupTile,
 		'medium-count': formatMediumCount,
 		'track-count': formatTrackCount,
 		'recording-time': formatRecordingTime,
+		'release-cover-art': formatReleaseCoverArt
 	}
 };
 
@@ -20,6 +22,25 @@ function formatArtistLink(a) { return linkTemplate.expand({ url: '?artist=' + a[
 function formatReleaseLink(r) { return linkTemplate.expand({ url: '?release=' + r['id'], text: r['title'] }); }
 function formatReleaseGroupLink(rg) { return linkTemplate.expand({ url: '?release-group=' + rg['id'], text: rg['title'] }); }
 function formatLabelLink(l) { return linkTemplate.expand({ url: '?label=' + l['id'], title: l['sort-name'], text: l['name'] }); }
+function formatRecordingLink(r) { return linkTemplate.expand({ url: '?recording=' + r['id'], text: r['title'] }); }
+
+var coverArtTemplate = jsontemplate.Template(
+	'<div class="cover-art">' +
+		'<img src="{url}" onerror="coverArtMissing(this);" alt="">' +
+	'</div>'
+);
+
+function formatReleaseCoverArt(r) {
+	coverArtURL = "http://mbjs.kepstin.ca/images/missingart.png";
+	if (r['cover-art-archive']) {
+		if (r['cover-art-archive']['front']) {
+			coverArtURL = "http://coverartarchive.org/release/" + r['id'] + "/front-250";
+		}
+	} else {
+		coverArtURL = "http://coverartarchive.org/release/" + r['id'] + "/front-250";
+	}
+	return coverArtTemplate.expand({ url: coverArtURL });
+}
 
 function formatRecordingTime(t) {
 	t = t / 1000
@@ -91,38 +112,43 @@ var releaseTemplate = jsontemplate.Template(
 			'{.end}' +
 		'</div>' +
 		'<div class="three columns">' +
-			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/release/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
-			'</div>' +
+			'{@|release-cover-art}' +
 		'</div>' +
 
 	'</header>' +
 	'{.repeated section media}' +
 		'<div class="row">' +
-			'<h3>' +
-				'{.section format}{@|html}{.or}Medium{.end} {number}' +
-				'{.section title}' +
-					': {@|html}' +
-				'{.end}' +
-			'</h3>' +
-			'<div class="tracklist">' +
-				'<div class="tracklist_header row">' +
-					'<div class="six columns offset-by-one track_name">Track</div>' +
-					'<div class="five columns credits">Credits</div>' +
-				'</div>' +
-				'{.repeated section tracks}' +
-					'<div class="track row">' +
-						'<div class="one column track_number">{.section number}{@|html}{.end}</div>' +
-						'<div class="five columns track_name">' +
-							'<a href="?recording={recording.id|htmltag}">{title}</a>' +
-							'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
-							'<br>— {artist-credit|artist-credit}' +
-						'</div>' +
-						'<div class="one column track_length">{.section length}{@|recording-time}{.end}</div>' +
-						'<div class="five columns credits"></div>' +
+			'<div class="twelve columns">' +
+				'<div class="row">' +
+					'<div class="twelve columns">' +
+						'<h3>' +
+							'{.section format}{@|html}{.or}Medium{.end} {position}' +
+							'{.section title}' +
+								': {@|html}' +
+							'{.end}' +
+						'</h3>' +
 					'</div>' +
-					
-				'{.end}' +
+				'</div>' +
+				'<div class="tracklist">' +
+					'{.repeated section tracks}' +
+						'<div class="track">' +
+							'<div class="row">' +
+								'<div class="seven columns">' +
+									'<div class="row">' +
+										'<div class="two mobile-one column track_number">{.section number}{@|html}{.end}</div>' +
+										'<div class="eight mobile-two columns track_name">' +
+											'{artist-credit|artist-credit} – ' +
+											'<a href="?recording={recording.id|htmltag}">{title}</a>' +
+											'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
+										'</div>' +
+										'<div class="two mobile-one column track_length">{.section length}{@|recording-time}{.end}</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="five columns credits"></div>' +
+							'</div>' +
+						'</div>' +
+					'{.end}' +
+				'</div>' +
 			'</div>' +
 		'</div>' +
 	'{.end}' +
@@ -131,6 +157,7 @@ var releaseTemplate = jsontemplate.Template(
 	'{.end}',
 	templateOptions
 );
+
 
 function formatMediumCount(r) {
 	var media_count = {};
@@ -175,9 +202,7 @@ function formatTrackCount(r) {
 var releaseTileTemplate = jsontemplate.Template(
 	'<div class="row release-tile">' +
 		'<div class="three mobile-one columns">' +
-			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/release/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
-			'</div>' +
+			'{@|release-cover-art}' +
 		'</div>' +
 		'<div class="nine mobile-three columns">' +
 			'<h3>' +
@@ -440,7 +465,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 	'</header>' +
 	'<div class="row">' +
 		'<div class="twelve columns">' +
-			'<ul class="block-grid two-up">' +
+			'<ul class="block-grid two-up mobile">' +
 				'{.repeated section releases}' +
 					'<li>' +
 						'{@|release-tile}' +
@@ -450,6 +475,49 @@ var releaseGroupTemplate = jsontemplate.Template(
 		'</div>' +
 	'</div>',
 templateOptions);
+
+var recordingTemplate = jsontemplate.Template(
+	'<div class="row">' +
+		'<div class="twelve columns">' +
+			'<ul class="breadcrumbs">' +
+				'<li>' +
+					'{artist-credit|artist-credit}' +
+				'</li>' +
+				'<li class="current">' +
+					'{@|recording-link}' +
+				'</li>' +
+			'</ul>' +
+		'</div>' +
+	'</div>' +
+	'<header class="row">' +
+		'<div class="twelve columns">' +
+			'<h1>' +
+				'{@|recording-link}' +
+				'{.section disambiguation}' +
+					' <small>({@|html})</small>' +
+				'{.end}' +
+				'<br>' +
+				'<small>' +
+					'{artist-credit|artist-credit}' +
+				'</small>' +
+			'</h1>' +
+		'</div>' +
+	'</header>' +
+	'<div class="row">' +
+		'<div class="twelve columns">' +
+			'<ul class="block-grid two-up mobile">' +
+				'{.repeated section releases}' +
+					'<li>' +
+						'{@|release-tile}' +
+					'</li>' +
+				'{.end}' +
+			'</ul>' +
+		'</div>' +
+	'</div>'
+			
+,
+	templateOptions
+);
 
 var layoutTemplate = jsontemplate.Template(
 	'<nav class="top-bar">' +

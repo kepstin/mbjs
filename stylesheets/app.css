@@ -5888,17 +5888,18 @@ table.hide-for-medium {
 }
 /* line 52, ../sass/app.scss */
 .cover-art, .artist-image {
-  height: 16em;
+  max-height: 16em;
   text-align: center;
 }
 /* line 55, ../sass/app.scss */
 .cover-art img, .artist-image img {
-  max-height: 100%;
+  max-height: inherit;
 }
 
 /* line 61, ../sass/app.scss */
 .release-group-tile .cover-art, .release-tile .cover-art {
   height: 8em;
+  max-height: 8em;
 }
 /* line 64, ../sass/app.scss */
 .release-group-tile h3, .release-tile h3 {
@@ -5926,8 +5927,10 @@ table.hide-for-medium {
 }
 /* line 84, ../sass/app.scss */
 .tracklist .track {
-  border-top: 1px solid #DDDDDD;
   padding-bottom: 4px;
+}
+.tracklist .track + .track {
+  border-top: 1px solid #DDDDDD;
   padding-top: 4px;
 }
 /* line 88, ../sass/app.scss */

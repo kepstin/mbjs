@@ -111,7 +111,7 @@ function getWikiText(o, callback) {
 
 function coverArtMissing(image) {
 	image.onerror = "";
-	image.src = "http://people.scs.carleton.ca/~cwalton3/temp/mbmockups/ajax/missingart.png";
+	image.src = "http://mbjs.kepstin.ca/images/missingart.png";
 }
 
 function loadArtist(mbid) {
@@ -240,19 +240,86 @@ function loadRelease(mbid) {
 		$.get(wsAddr + '/release/' + mbid, {
 			inc: 'artist-credits+labels+discids+recordings+release-groups+annotation',
 			fmt: 'json'
-		}, function (release) {
-			for (var i = 0; i < release['media'].length; ++i) {
-				release['media'][i]['number'] = i + 1;
-			}
-			
-			console.log(release);
-			
-			$('body').html(layoutTemplate.expand({
-				body: releaseTemplate.expand(release)
-			}));
-			fixupLinks();
-		}, 'json').error(webserviceError);
+		}, renderRelease, 'json').error(webserviceError);
 	});
+}
+
+function renderRelease(release) {
+	console.log(release);
+	renderLayout(releaseTemplate.expand(release));
+}
+
+function loadRecording(mbid) {
+	loadingScreen();
+	rl.queue(function() {
+		$.get(wsAddr + '/recording/' + mbid, {
+			inc: 'artist-credits',
+			fmt: 'json',
+		}, function (recording) { loadRecordingReleases(recording); }, 'json').error(webserviceError);
+	});
+}
+
+function loadRecordingReleases(recording, limit = 100, offset = 0) {
+	rl.queue(function() {
+		$.get(wsAddr + '/release', {
+			recording: recording['id'],
+			inc:       'artist-credits+media+labels',
+			limit:     limit,
+			offset:    offset,
+			fmt:       'json',
+		}, function(data) { loadRecordingReleasesPage(recording, data, limit, offset) }, 'json').error(webserviceError);
+	});
+}
+
+function loadRecordingReleasesPage(recording, data, limit, offset) {
+	// First merge the loaded releases into the recording
+	if (recording['releases']) {
+		recording['releases'] = recording['releases'].concat(data['releases']);
+	} else {
+		recording['releases'] = data['releases'];
+	}
+
+	// Check if we need to load more releases
+	if (data['release-count'] > (offset + limit)) {
+		loadRecordingReleases(recording, limit, offset + limit);
+	} else {
+		renderRecording(recording);
+	}
+}
+
+function renderRecording(recording) {
+	recording['releases'] = recording['releases'].filter(function (r) {
+		return (r['status'] != "Pseudo-Release");
+	});
+	recording['releases'].sort(function (a,b) {
+		if (!a['date']) {
+			if (!b['date']) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
+			if (!b['date']) {
+				return -1;
+			}
+		}
+		if (a['date'] < b['date']) {
+			return -1;
+		} else if (a['date'] > b['date']) {
+			return 1;
+		} else {
+			return 0;
+		}
+	});
+	console.log(recording);
+	renderLayout(recordingTemplate.expand(recording));
+}
+
+function renderLayout(body) {
+	$('body').html(layoutTemplate.expand({
+		body: body
+	}));
+	fixupLinks();
 }
 
 function loadReleaseGroup(mbid) {
@@ -326,6 +393,8 @@ function loadPage(state) {
 			loadReleaseGroup(state['release-group']);
 		} else if (state['artist']) {
 			loadArtist(state['artist']);
+		} else if (state['recording']) {
+			loadRecording(state['recording']);
 		} else {
 			body = errorTemplate.expand({
 				header: 'Error 400',
@@ -339,6 +408,8 @@ function loadPage(state) {
 	if (body) {
 		$('body').html(layoutTemplate.expand({body: body}));
 		fixupLinks();
+		// For the time being...
+		window.scroll(0,0);
 	}
 }
 
