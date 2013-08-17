@@ -63,21 +63,17 @@ var artistCreditTemplate = jsontemplate.Template(
 function formatArtistCredit(ac) { return artistCreditTemplate.expand(ac); }
 
 var releaseTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="breadcrumbs">' +
-				'<li>' +
-					'{release-group.artist-credit|artist-credit}' +
-				'</li>' +
-				'<li>' +
-					'{release-group|release-group-link}' +
-				'</li>' +
-				'<li class="current">' +
-					'{@|release-link}' +
-				'</li>' +
-			'</ul>' +
-		'</div>' +
-	'</div>' +
+	'<ul class="breadcrumbs">' +
+		'<li>' +
+			'{release-group.artist-credit|artist-credit}' +
+		'</li>' +
+		'<li>' +
+			'{release-group|release-group-link}' +
+		'</li>' +
+		'<li class="current">' +
+			'{@|release-link}' +
+		'</li>' +
+	'</ul>' +
 	'<header class="row">' +
 		'<div class="nine columns">' +
 			'<h1>' +
@@ -117,39 +113,31 @@ var releaseTemplate = jsontemplate.Template(
 
 	'</header>' +
 	'{.repeated section media}' +
-		'<div class="row">' +
-			'<div class="twelve columns">' +
-				'<div class="row">' +
-					'<div class="twelve columns">' +
-						'<h3>' +
-							'{.section format}{@|html}{.or}Medium{.end} {position}' +
-							'{.section title}' +
-								': {@|html}' +
-							'{.end}' +
-						'</h3>' +
-					'</div>' +
-				'</div>' +
-				'<div class="tracklist">' +
-					'{.repeated section tracks}' +
-						'<div class="track">' +
+		'<h3>' +
+			'{.section format}{@|html}{.or}Medium{.end} {position}' +
+			'{.section title}' +
+				': {@|html}' +
+			'{.end}' +
+		'</h3>' +
+		'<div class="tracklist">' +
+			'{.repeated section tracks}' +
+				'<div class="track">' +
+					'<div class="row">' +
+						'<div class="seven columns">' +
 							'<div class="row">' +
-								'<div class="seven columns">' +
-									'<div class="row">' +
-										'<div class="two mobile-one column track_number">{.section number}{@|html}{.end}</div>' +
-										'<div class="eight mobile-two columns track_name">' +
-											'{artist-credit|artist-credit} – ' +
-											'<a href="?recording={recording.id|htmltag}">{title}</a>' +
-											'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
-										'</div>' +
-										'<div class="two mobile-one column track_length">{.section length}{@|recording-time}{.end}</div>' +
-									'</div>' +
+								'<div class="two mobile-one column track_number">{.section number}{@|html}{.end}</div>' +
+								'<div class="eight mobile-two columns track_name">' +
+									'{artist-credit|artist-credit} – ' +
+									'<a href="?recording={recording.id|htmltag}">{title}</a>' +
+									'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
 								'</div>' +
-								'<div class="five columns credits"></div>' +
+								'<div class="two mobile-one column track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-					'{.end}' +
+						'<div class="five columns credits"></div>' +
+					'</div>' +
 				'</div>' +
-			'</div>' +
+			'{.end}' +
 		'</div>' +
 	'{.end}' +
 	'{.repeated section text}' +
@@ -210,10 +198,9 @@ var releaseTileTemplate = jsontemplate.Template(
 				'{.section disambiguation}' +
 					' <small>({@|html})</small>' +
 				'{.end}' +
+				'<br>' +
+				'<small>{artist-credit|artist-credit}</small>' +
 			'</h3>' +
-			'<h4>' +
-				'{artist-credit|artist-credit}' +
-			'</h4>' +
 			'<p>' +
 				'{@|medium-count}, ' +
 				'{@|track-count} tracks, ' +
@@ -261,10 +248,11 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 						'{@|html}' +
 					'</span>' +
 				'{.end}' +
+				'<br>' +
+				'<small>' +
+					'{artist-credit|artist-credit}' +
+				'</small>' +
 			'</h3>' +
-			'<h4>' +
-				'{artist-credit|artist-credit}' +
-			'</h4>' +
 			/*'<p>' +
 				'{.section first-release-date}' +
 					'{@|html}' +
@@ -279,7 +267,7 @@ function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); 
 var artistTemplate = jsontemplate.Template(
 	'<header class="row">' +
 		'{.section image}' +
-			'<div class="nine mobile-three columns">' +
+			'<div class="nine columns">' +
 		'{.or}' +
 			'<div class="twelve columns">' +
 		'{.end}' +
@@ -325,109 +313,99 @@ var artistTemplate = jsontemplate.Template(
 			'{.section wikipedia}' +
 				'{@}' +
 			'{.end}' +
-			'{.section annotation}' +
+		/*	'{.section annotation}' +
 				'<p>{@|html}</p>' +
-			'{.end}' +
-			'<div class="credits">' +
-				'{.section band-members}' +
-					'<div class="credit">' +
-						'<b>Members:</b> ' +
-						'{.repeated section artists}' +
-							'{@|artist-link}' +
-						'{.alternates with}' +
-							', ' +
-						'{.end}' +
-					'</div>' +
-				'{.end}' +
-				'{.section member-of}' +
-					'<div class="credit">' +
-						'<b>Member of:</b> ' +
-						'{.repeated section artists}' +
-							'{@|artist-link}' +
-						'{.alternates with}' +
-							', ' +
-						'{.end}' +
-					'</div>' +
-				'{.end}' +
-				'{.section voiced-by}' +
-					'<p><b>Voiced by:</b> ' +
-					'{.repeated section artists}' +
-						'{@|artist-link}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
-					'</p>' +
-				'{.end}' +
-				'{.section voice-of}' +
-					'<p><b>Voice of:</b> ' +
-					'{.repeated section artists}' +
-						'{@|artist-link}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
-					'</p>' +
-				'{.end}' +
-				'{.section legal-name}' +
-					'<p><b>Legal name:</b> ' +
-					'{.repeated section artists}' +
-						'{@|artist-link}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
-					'</p>' +
-				'{.end}' +
-				'{.section performs-as}' +
-					'<p><b>Performs as:</b> ' +
-					'{.repeated section artists}' +
-						'{@|artist-link}' +
-					'{.alternates with}' +
-						', ' +
-					'{.end}' +
-					'</p>' +
-				'{.end}' +
-			'</div>' +
+			'{.end}' + */
 		'</div>' +
 		'{.section image}' +
-			'<div class="three mobile-one columns">' +
+			'<div class="three columns">' +
 				'<div class="artist-image">' +
 					'<img src="{image|htmltag}" alt="">' +
 				'</div>' +
 			'</div>' +
 		'{.end}' +
 	'</header>' +
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="block-grid two-up mobile">' +
-				'{.repeated section release-groups}' +
-					'<li>' +
-						'{@|release-group-tile}' +
-					'</li>' +
-				'{.end}' +
-			'</ul>' +
-		'</div>' +
-	'</div>',
-templateOptions);
+	'<p class="credits">' +
+		'{.section band-members}' +
+			'<b>Members:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+		'{.section member-of}' +
+			'<b>Member of:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+		'{.section voiced-by}' +
+			'<b>Voiced by:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+		'{.section voice-of}' +
+			'<b>Voice of:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+		'{.section legal-name}' +
+			'<b>Legal name:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+		'{.section performs-as}' +
+			'<b>Performs as:</b> ' +
+			'{.repeated section artists}' +
+				'{@|artist-link}' +
+			'{.alternates with}' +
+				', ' +
+			'{.end}' +
+			'<br>' +
+		'{.end}' +
+	'</p>' +
+	'<ul class="block-grid two-up mobile">' +
+		'{.repeated section release-groups}' +
+			'<li>' +
+				'{@|release-group-tile}' +
+			'</li>' +
+		'{.end}' +
+	'</ul>',
+	templateOptions);
 
 var wikiLinkTemplate = jsontemplate.Template(
-	'<p class="text-right"><small>' +
+	'<p class="text-right" style="margin-top: 0"><small>' +
 		'Text from <a href="{link}">Wikipedia</a>, used under the terms of the ' +
 		'<a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> license.' +
 	'</small></p>',
 templateOptions);
 
 var releaseGroupTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="breadcrumbs">' +
-				'<li>' +
-					'{artist-credit|artist-credit}' +
-				'</li>' +
-				'<li class="current">' +
-					'{@|release-group-link}' +
-				'</li>' +
-			'</ul>' +
-		'</div>' +
-	'</div>' +
+	'<ul class="breadcrumbs">' +
+		'<li>' +
+			'{artist-credit|artist-credit}' +
+		'</li>' +
+		'<li class="current">' +
+			'{@|release-group-link}' +
+		'</li>' +
+	'</ul>' +
 	'<header class="row">' +
 		'<div class="nine columns">' +
 			'<h1>' +
@@ -449,7 +427,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 				'<small>' +
 					'{artist-credit|artist-credit}' +
 				'</small>' +
-			'</h2>' +
+			'</h1>' +
 			'{.section wikipedia}' +
 				'{@}' +
 			'{.end}' +
@@ -463,59 +441,43 @@ var releaseGroupTemplate = jsontemplate.Template(
 			'</div>' +
 		'</div>' +
 	'</header>' +
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="block-grid two-up mobile">' +
-				'{.repeated section releases}' +
-					'<li>' +
-						'{@|release-tile}' +
-					'</li>' +
-				'{.end}' +
-			'</ul>' +
-		'</div>' +
-	'</div>',
-templateOptions);
+	'<ul class="block-grid two-up mobile">' +
+		'{.repeated section releases}' +
+			'<li>' +
+				'{@|release-tile}' +
+			'</li>' +
+		'{.end}' +
+	'</ul>',
+	templateOptions);
 
 var recordingTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="breadcrumbs">' +
-				'<li>' +
-					'{artist-credit|artist-credit}' +
-				'</li>' +
-				'<li class="current">' +
-					'{@|recording-link}' +
-				'</li>' +
-			'</ul>' +
-		'</div>' +
-	'</div>' +
-	'<header class="row">' +
-		'<div class="twelve columns">' +
-			'<h1>' +
-				'{@|recording-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
-				'<br>' +
-				'<small>' +
-					'{artist-credit|artist-credit}' +
-				'</small>' +
-			'</h1>' +
-		'</div>' +
+	'<ul class="breadcrumbs">' +
+		'<li>' +
+			'{artist-credit|artist-credit}' +
+		'</li>' +
+		'<li class="current">' +
+			'{@|recording-link}' +
+		'</li>' +
+	'</ul>' +
+	'<header>' +
+		'<h1>' +
+			'{@|recording-link}' +
+			'{.section disambiguation}' +
+				' <small>({@|html})</small>' +
+			'{.end}' +
+			'<br>' +
+			'<small>' +
+				'{artist-credit|artist-credit}' +
+			'</small>' +
+		'</h1>' +
 	'</header>' +
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<ul class="block-grid two-up mobile">' +
-				'{.repeated section releases}' +
-					'<li>' +
-						'{@|release-tile}' +
-					'</li>' +
-				'{.end}' +
-			'</ul>' +
-		'</div>' +
-	'</div>'
-			
-,
+	'<ul class="block-grid two-up mobile">' +
+		'{.repeated section releases}' +
+			'<li>' +
+				'{@|release-tile}' +
+			'</li>' +
+		'{.end}' +
+	'</ul>',
 	templateOptions
 );
 
@@ -527,7 +489,11 @@ var layoutTemplate = jsontemplate.Template(
 			'</li>' +
 		'</ul>' +
 	'</nav>' +
-	'{body|raw}' +
+	'<section class="row">' +
+		'<div id="body" class="twelve columns">' +
+			'{body|raw}' +
+		'</div>' +
+	'</section>' +
 	'<footer class="row">' +
 		'<div class="twelve columns">' +
 			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
@@ -536,29 +502,19 @@ var layoutTemplate = jsontemplate.Template(
 );
 
 var indexTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'<div class="twelve columns">' +
-			'<header id="page-header" class="page-header">' +
-			'<h1>Magic Javascript MusicBrainz site thing.</h1>' +
-			'</header>' +
-			'<p>This page exists as a tech demo. It will load pages from the MusicBrainz webservice, then format them into page templates in Javascript. The idea is to see how much you can do nowadays with a “static” HTML page by itself.</p>' +
-			'<p>Try adding a “?release-group=mbid” or “?release=mbid” query parameter. Or <a href="?release-group=d288b7b2-5f6b-4343-ab51-2a8c754ee02a">follow this link</a> or <a href="?release=bef90838-a09d-4853-ae85-6314d3ab5a4b">this link</a>, for an example.</p>' +
-		'</div>' +
-	'</div>'
+	'<h1>Magic Javascript MusicBrainz site thing.</h1>' +
+	'<p>This page exists as a tech demo. It will load pages from the MusicBrainz webservice, then format them into page templates in Javascript. The idea is to see how much you can do nowadays with a “static” HTML page by itself.</p>' +
+	'<p>Try adding a “?release-group=mbid” or “?release=mbid” query parameter. Or <a href="?release-group=d288b7b2-5f6b-4343-ab51-2a8c754ee02a">follow this link</a>, <a href="?release=bef90838-a09d-4853-ae85-6314d3ab5a4b">this link</a>, or even <a href="?recording=8d8f94eb-d7be-46f7-9b01-4ec81a449e09">this link</a> for an example.</p>'
 );
 
 var errorTemplate = jsontemplate.Template(
-	'<div class="row">' +
-		'{.section header}' +
-			'<div id="page-header" class="page-header">' +
-				'<h1>{@|html}</h1>' +
-			'</div>' +
+	'{.section header}' +
+		'<h1>{@|html}</h1>' +
+	"{.end}" +
+	"{.section text}" +
+		"{.repeated section @}" +
+			"<p>{@|html}</p>" +
 		"{.end}" +
-		"{.section text}" +
-			"{.repeated section @}" +
-				"<p>{@|html}</p>" +
-			"{.end}" +
-		"{.end}" +
-		'<a href="">Return to index page</a>' +
-	'</div>'
+	"{.end}" +
+	'<a href="">Return to index page</a>'
 );
