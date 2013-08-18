@@ -115,6 +115,39 @@ function coverArtMissing(image) {
 	image.src = "http://mbjs.kepstin.ca/images/missingart.png";
 }
 
+function groupRelations(entity) {
+	if (!entity['relations']) return;
+
+	var groupedRels = new Object();
+	for (var i = 0; i < entity['relations'].length; ++i) {
+		var rel = entity['relations'][i];
+		var entityType = undefined;
+		var type_id = rel['type'];
+		var direction = rel['direction'];
+
+		if (rel['artist']) entityType = 'artist';
+		if (rel['url']) entityType = 'url';
+		if (!entityType) {
+			console.log("Couldn't determine entity type for relation:");
+			console.log(rel);
+			continue;
+		}
+
+		if (!groupedRels[entityType])
+			groupedRels[entityType] = {};
+		if (!groupedRels[entityType][type_id])
+			groupedRels[entityType][type_id] = {};
+		if (!groupedRels[entityType][type_id][direction]) {
+			groupedRels[entityType][type_id][direction] = [rel];
+		} else {
+			groupedRels[entityType][type_id][direction].push(rel);
+		}
+	}
+
+	entity['groupedRelations'] = groupedRels;
+}
+
+
 function releaseOrder(a, b) {
 	if (!a['date']) {
 		if (!b['date']) {
@@ -223,6 +256,8 @@ function renderArtist(artist) {
 		return;
 	}
 
+	groupRelations(artist);
+
 	var bandmembers = [];
 	var memberof = [];
 	var legalname = [];
@@ -311,7 +346,7 @@ function loadRecording(mbid) {
 	loadingScreen();
 	rl.queue(function() {
 		$.get(wsAddr + '/recording/' + mbid, {
-			inc: 'artist-credits',
+			inc: 'artist-credits+artist-rels',
 			fmt: 'json',
 		}, function (recording) {
 			loadRecordingReleases(recording);
@@ -353,6 +388,7 @@ function loadRecordingReleasesPage(recording, data, offset) {
 }
 
 function renderRecording(recording) {
+	groupRelations(recording);
 	recording['releases'] = recording['releases'].filter(function (r) {
 		return (r['status'] != "Pseudo-Release");
 	});

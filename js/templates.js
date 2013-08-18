@@ -12,7 +12,8 @@ var templateOptions = {
 		'medium-count': formatMediumCount,
 		'track-count': formatTrackCount,
 		'recording-time': formatRecordingTime,
-		'release-cover-art': formatReleaseCoverArt
+		'release-cover-art': formatReleaseCoverArt,
+		'relation-name': formatRelationName
 	}
 };
 
@@ -50,6 +51,24 @@ function formatRecordingTime(t) {
 	if (minutes > 0 && seconds < 10) { seconds = '0' + seconds }
 	if (hours > 0 && minutes < 10) { minutes = '0' + minutes }
 	return (hours > 0 ? hours + ':' : '') + minutes + ':' + seconds;
+}
+
+
+var relationNames = {
+	'75c09861-6857-4ec0-9729-84eefde7fc86': {
+		forward: '{additional} {minor} collaborator on',
+		reverse: '{additional} {minor} collaborators'
+	},
+	'e259a3f5-ce8e-45c1-9ef7-90ff7d0c7589': {
+		forward: 'voice of',
+		reverse: 'voiced by'
+	},
+	'eb535226-f8ca-499d-9b18-6a144df4ae6f': {
+		forward: 'blog'
+	}
+}
+function formatRelationName(rel) {
+	return "" + rel;
 }
 
 var artistCreditTemplate = jsontemplate.Template(
@@ -283,8 +302,8 @@ var artistTemplate = jsontemplate.Template(
 				'{.section gender}' +
 					', {@|html}' +
 				'{.end}' +
-				'{.section country}' +
-					', {@|html}' +
+				'{.section area}' +
+					', {name|html}' +
 				'{.end}' +
 				'{.section life-span}' +
 					', ' +
