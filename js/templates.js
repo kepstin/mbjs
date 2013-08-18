@@ -516,6 +516,7 @@ var layoutTemplate = jsontemplate.Template(
 	'<footer class="row">' +
 		'<div class="twelve columns">' +
 			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
+			'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
 		'</div>' +
 	'</footer>'
 );
