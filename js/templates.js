@@ -6,6 +6,7 @@ var templateOptions = {
 		'release-group-link': formatReleaseGroupLink,
 		'label-link': formatLabelLink,
 		'recording-link': formatRecordingLink,
+		'work-link': formatWorkLink,
 		'artist-credit': formatArtistCredit,
 		'release-tile': formatReleaseTile,
 		'release-group-tile': formatReleaseGroupTile,
@@ -24,6 +25,7 @@ function formatReleaseLink(r) { return linkTemplate.expand({ url: '?release=' + 
 function formatReleaseGroupLink(rg) { return linkTemplate.expand({ url: '?release-group=' + rg['id'], text: rg['title'] }); }
 function formatLabelLink(l) { return linkTemplate.expand({ url: '?label=' + l['id'], title: l['sort-name'], text: l['name'] }); }
 function formatRecordingLink(r) { return linkTemplate.expand({ url: '?recording=' + r['id'], text: r['title'] }); }
+function formatWorkLink(r) { return linkTemplate.expand({ url: '?work=' + r['id'], text: r['title'] }); }
 
 var coverArtTemplate = jsontemplate.Template(
 	'<div class="cover-art">' +
@@ -55,6 +57,10 @@ function formatRecordingTime(t) {
 
 
 var relationNames = {
+	'a3005666-a872-32c3-ad06-98af558e99b0': {
+		forward: '{partial} {live} {instrumental} {cover} recording of',
+		referse: '{partial} {live} {instrumental} {cover} recordings',
+	},
 	'75c09861-6857-4ec0-9729-84eefde7fc86': {
 		forward: '{additional} {minor} collaborator on',
 		reverse: '{additional} {minor} collaborators'
@@ -68,7 +74,27 @@ var relationNames = {
 	}
 }
 function formatRelationName(rel) {
-	return "" + rel;
+	var dir = rel['direction'];
+	var id = rel['type-id'];
+	var attrs = rel['attributes'].slice(0);
+	var unusedAttrs = [];
+	var phrase = relationNames[id][dir];
+	while (attrs.length > 0) {
+		var attr = attrs.pop();
+		var matches = phrase.match('\\{(' + attr + ')(?:\\|([^}]+))?\\}');
+		console.log(matches);
+		if (matches) {
+			var replace = matches[2] ? matches[2] : attr;
+			console.log("Replacing with " + replace);
+			phrase = phrase.replace(matches[0], replace);
+		} else {
+			unusedAttrs.push(attr);
+		}
+	}
+	console.log(unusedAttrs);
+	phrase = phrase.replace(/\{\*\}/, unusedAttrs.join(', '));
+	phrase = phrase.replace(/\{[^}]*\}/g, '');
+	return phrase;
 }
 
 var artistCreditTemplate = jsontemplate.Template(
@@ -153,7 +179,13 @@ var releaseTemplate = jsontemplate.Template(
 								'<div class="two mobile-one column track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="five columns credits"></div>' +
+						'<div class="five columns credits">' +
+	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
+		'{.repeated section forward}' +
+			'{@|relation-name} {work|work-link}' +
+		'{.end}' +
+	'{.end}{.end}{.end}{.end}' +
+						'</div>' +
 					'</div>' +
 				'</div>' +
 			'{.end}' +
@@ -400,13 +432,34 @@ var artistTemplate = jsontemplate.Template(
 			'<br>' +
 		'{.end}' +
 	'</p>' +
-	'<ul class="block-grid two-up mobile">' +
-		'{.repeated section release-groups}' +
-			'<li>' +
-				'{@|release-group-tile}' +
-			'</li>' +
-		'{.end}' +
-	'</ul>',
+	'<h3>Release Groups</h3>' +
+	'<dl class="sub-nav">' +
+		'<dt>Artist</dt>' +
+		'<dd class="active"><a href="#">This Artist</a></dd>' +
+		'<dd><a href="#">Various Artists</a></dd>' +
+		'<dt>Type</dt>' +
+		'<dd class="active"><a href="#">Single</a></dd>' +
+		'<dd class="active"><a href="#">Album</a></dd>' +
+	'</dl>' +
+	'{.repeated section groupedReleaseGroups}' +
+		'<div class="row">' +
+			'<div class="one column">' +
+				'<h4>{year|html}</h4>' +
+			'</div>' +
+			'<div class="eleven columns">' +
+				'<ul class="block-grid two-up mobile">' +
+					'{.repeated section releaseGroups}' +
+						'<li>' +
+							'{@|release-group-tile}' +
+						'</li>' +
+					'{.end}' +
+				'</ul>' +
+			'</div>' +
+		'</div>' +
+	'{.end}' +
+	'{.repeated section text}' +
+		'<p>{@|html}</p>' +
+	'{.end}',
 	templateOptions);
 
 var wikiLinkTemplate = jsontemplate.Template(
@@ -490,11 +543,20 @@ var recordingTemplate = jsontemplate.Template(
 			'</small>' +
 		'</h1>' +
 	'</header>' +
+	'<h3>Credits</h3>' +
+	'{.section groupedRelations}{.section work}{.section performance}' +
+		'{.repeated section forward}' +
+			'<h4>{@|relation-name} {work|work-link}</h4>' +
+		'{.end}' +
+	'{.end}{.end}{.end}' +
+	'<h3>Appears on Releases</h3>' +
 	'<ul class="block-grid two-up mobile">' +
 		'{.repeated section releases}' +
 			'<li>' +
 				'{@|release-tile}' +
 			'</li>' +
+		/*'{.else}' +
+			'<li><p>This is a stand-alone recording.</p></li>' +*/
 		'{.end}' +
 	'</ul>',
 	templateOptions

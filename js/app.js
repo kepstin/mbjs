@@ -127,6 +127,8 @@ function groupRelations(entity) {
 
 		if (rel['artist']) entityType = 'artist';
 		if (rel['url']) entityType = 'url';
+		if (rel['work']) entityType = 'work';
+		var linkedEntity = rel[entityType];
 		if (!entityType) {
 			console.log("Couldn't determine entity type for relation:");
 			console.log(rel);
@@ -142,9 +144,34 @@ function groupRelations(entity) {
 		} else {
 			groupedRels[entityType][type_id][direction].push(rel);
 		}
+		
+		groupRelations(linkedEntity);
 	}
 
 	entity['groupedRelations'] = groupedRels;
+}
+
+function groupReleaseGroupsByYear(entity) {
+	releaseGroups = entity['release-groups'];
+	groupedReleaseGroups = [];
+	releaseGroupGroup = {
+		year: undefined
+	};
+	
+	for (var i = 0; i < releaseGroups.length; ++i) {
+		rg = releaseGroups[i]
+		year = rg['first-release-date'].split('-')[0]
+		if (year == '') year = '????';
+
+		if (releaseGroupGroup['year'] != year) {
+			releaseGroupGroup = { year: year, releaseGroups: [] }
+			groupedReleaseGroups.push(releaseGroupGroup);
+		}
+
+		releaseGroupGroup['releaseGroups'].push(rg);
+	}
+
+	entity['groupedReleaseGroups'] = groupedReleaseGroups;
 }
 
 
@@ -195,12 +222,23 @@ function loadArtist(mbid) {
 	rl.queue(function() {
 		$.get(wsAddr + '/artist/' + mbid, {
 			fmt: 'json',
-			inc: 'url-rels+artist-rels+annotation',
-		}, function (artist) {
-			loadArtistWikipedia(artist);
-			loadArtistReleaseGroups(artist);
-		}, 'json').error(webserviceError);
+			inc: 'url-rels+artist-rels',
+		}, loadArtistResult, 'json').error(webserviceError);
 	});
+}
+
+function loadArtistResult(artist) {
+	loadArtistWikipedia(artist);
+
+	// Special-case to skip release group loading on Various Artists
+	if (artist['id'] == '89ad4ac3-39f7-470e-963a-56509c546377') {
+		artist['loadedReleaseGroups'] = true;
+		artist['release-groups'] = [];
+		artist['text'] = ["For performance reasons, the release groups for Various Artists are blocked."];
+		renderArtist(artist);
+	} else {
+		loadArtistReleaseGroups(artist);
+	}
 }
 
 function loadArtistWikipedia(artist) {
@@ -322,6 +360,7 @@ function renderArtist(artist) {
 	}
 
 	artist['release-groups'].sort(releaseGroupOrder);
+	groupReleaseGroupsByYear(artist);
 
 	console.log(artist);
 	renderLayout(artistTemplate.expand(artist));
@@ -331,13 +370,22 @@ function loadRelease(mbid) {
 	loadingScreen();
 	rl.queue(function() {
 		$.get(wsAddr + '/release/' + mbid, {
-			inc: 'artist-credits+labels+discids+recordings+release-groups+annotation',
+			inc: 'artist-credits+labels+discids+recordings+release-groups+artist-rels+recording-rels+work-rels+recording-level-rels+work-level-rels',
 			fmt: 'json'
 		}, renderRelease, 'json').error(webserviceError);
 	});
 }
 
 function renderRelease(release) {
+	groupRelations(release);
+	for (var i = 0; i < release['media'].length; ++i) {
+		var media = release['media'][i];
+		for (var j = 0; j < media['tracks'].length; ++j) {
+			var recording = media['tracks'][j]['recording'];
+			if (recording) groupRelations(recording);
+		}
+	}
+
 	console.log(release);
 	renderLayout(releaseTemplate.expand(release));
 }
@@ -346,7 +394,7 @@ function loadRecording(mbid) {
 	loadingScreen();
 	rl.queue(function() {
 		$.get(wsAddr + '/recording/' + mbid, {
-			inc: 'artist-credits+artist-rels',
+			inc: 'artist-credits+artist-rels+work-rels+work-level-rels',
 			fmt: 'json',
 		}, function (recording) {
 			loadRecordingReleases(recording);
