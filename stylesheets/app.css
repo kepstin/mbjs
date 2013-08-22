@@ -5958,3 +5958,12 @@ dl dt {
   font-weight: bold;
   display: inline-block;
 }
+
+.credits {
+	-moz-column-width: 18em;
+	-webkit-column-width: 18em;
+	column-width: 18em;
+}
+.credits > div {
+	page-break-inside: avoid;
+}

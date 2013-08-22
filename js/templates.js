@@ -57,17 +57,37 @@ function formatRecordingTime(t) {
 
 
 var relationNames = {
-	'a3005666-a872-32c3-ad06-98af558e99b0': {
-		forward: '{partial} {live} {instrumental} {cover} recording of',
-		referse: '{partial} {live} {instrumental} {cover} recordings',
+	'0fdbe3c6-7700-4a31-ae54-b53f06ae1cfa': {
+		forward: '{additional} {guest} {solo} {*} {*:|vocals}',
+		backward: '{additional} {guest} {solo} {*} {*:|vocals}',
+	},
+	'3e48faba-ec01-47fd-8e89-30e81161661c': {
+		forward: '{additional} {translated} lyrics',
+		backward: '{additional} {translated:translator|lyricist}',
+	},
+	'59054b12-01ac-43ee-a618-285fd397e461': {
+		forward: '{additional} {guest} {solo} {*}',
+		backward: '{additional} {guest} {solo} {*}',
 	},
 	'75c09861-6857-4ec0-9729-84eefde7fc86': {
 		forward: '{additional} {minor} collaborator on',
-		reverse: '{additional} {minor} collaborators'
+		backward: '{additional} {minor} collaborators'
+	},
+	'a255bca1-b157-4518-9108-7b147dc3fc68': {
+		forward: '{additional:additionally} wrote',
+		backward: '{additional} writer',
+	},
+	'a3005666-a872-32c3-ad06-98af558e99b0': {
+		forward: '{partial} {live} {instrumental} {cover} recording of',
+		backward: '{partial} {live} {instrumental} {cover} recordings',
+	},
+	'd59d99ea-23d4-4a80-b066-edca32ee158f': {
+		forward: '{additional:additionally} composed',
+		backward: '{additional} composer',
 	},
 	'e259a3f5-ce8e-45c1-9ef7-90ff7d0c7589': {
 		forward: 'voice of',
-		reverse: 'voiced by'
+		backward: 'voiced by'
 	},
 	'eb535226-f8ca-499d-9b18-6a144df4ae6f': {
 		forward: 'blog'
@@ -77,24 +97,58 @@ function formatRelationName(rel) {
 	var dir = rel['direction'];
 	var id = rel['type-id'];
 	var attrs = rel['attributes'].slice(0);
+	var usedAttrs = [];
 	var unusedAttrs = [];
 	var phrase = relationNames[id][dir];
-	while (attrs.length > 0) {
-		var attr = attrs.pop();
-		var matches = phrase.match('\\{(' + attr + ')(?:\\|([^}]+))?\\}');
+	var matches = undefined;
+	do {
+		matches = /\{([^*:|}]+)(?::([^|}]*)(?:\|([^\}]+))?)?\}/.exec(phrase);
 		console.log(matches);
 		if (matches) {
-			var replace = matches[2] ? matches[2] : attr;
+			console.log('Found substitution ' + matches[0]);
+			var attr = matches[1];
+			var mode = matches[2]
+			// Check if the attr is present
+			var present = false;
+			if (attrs.indexOf(attr) != -1) {
+				present = true;
+				if (usedAttrs.indexOf(attr) == -1) usedAttrs.push(attr);
+			}
+			if (present) {
+				console.log("Attribute is present");
+				replace = matches[2] === undefined ? attr : matches[2];
+			} else {
+				console.log("Attribute is not present");
+				replace = matches[3] === undefined ? '' : matches[3];
+			}
 			console.log("Replacing with " + replace);
 			phrase = phrase.replace(matches[0], replace);
-		} else {
+		}
+	} while (matches);
+	for (var i = 0; i < attrs.length; ++i) {
+		var attr = attrs[i];
+		if (usedAttrs.indexOf(attr) == -1) {
 			unusedAttrs.push(attr);
 		}
 	}
+	do {
+		matches = /\{\*(?::([^|}]*)(?:\|([^\}]+))?)?\}/.exec(phrase);
+		console.log(matches);
+		if (matches) {
+			present = (unusedAttrs.length > 0)
+			if (present) {
+				console.log("Attribute is present");
+				replace = matches[1] === undefined ? unusedAttrs.join(', ') : matches[1];
+			} else {
+				console.log("Attribute is not present");
+				replace = matches[2] === undefined ? '' : matches[2];
+			}
+			console.log("Replacing with " + replace);
+			phrase = phrase.replace(matches[0], replace);
+		}
+	} while (matches)
 	console.log(unusedAttrs);
-	phrase = phrase.replace(/\{\*\}/, unusedAttrs.join(', '));
-	phrase = phrase.replace(/\{[^}]*\}/g, '');
-	return phrase;
+	return phrase.trim();
 }
 
 var artistCreditTemplate = jsontemplate.Template(
@@ -544,11 +598,38 @@ var recordingTemplate = jsontemplate.Template(
 		'</h1>' +
 	'</header>' +
 	'<h3>Credits</h3>' +
-	'{.section groupedRelations}{.section work}{.section performance}' +
-		'{.repeated section forward}' +
-			'<h4>{@|relation-name} {work|work-link}</h4>' +
+	'{.section groupedRelations}' +
+		'<div class="credits">' +
+		'{.section artist}' +
+			'{.section vocal}{.repeated section backward}' +
+				'<div>{@|relation-name}: {artist|artist-link}</div>' +
+			'{.end}{.end}' +
+			'{.section instrument}{.repeated section backward}' +
+				'<div>{@|relation-name}: {artist|artist-link}</div>' +
+			'{.end}{.end}' +
 		'{.end}' +
-	'{.end}{.end}{.end}' +
+		'</div>' +
+		'{.section work}{.section performance}' +
+			'{.repeated section forward}' +
+				'<h4>{@|relation-name} {work|work-link}</h4>' +
+				'{.section work}{.section groupedRelations}' +
+					'<div class="credits">' +
+					'{.section artist}' +
+						'{.section writer}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+						'{.section composer}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+						'{.section lyricist}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+					'{.end}' +
+					'</div>' + 
+				'{.end}{.end}' +
+			'{.end}' +
+		'{.end}{.end}' +
+	'{.end}' +
 	'<h3>Appears on Releases</h3>' +
 	'<ul class="block-grid two-up mobile">' +
 		'{.repeated section releases}' +
