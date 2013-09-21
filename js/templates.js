@@ -486,7 +486,11 @@ var artistTemplate = jsontemplate.Template(
 			'<br>' +
 		'{.end}' +
 	'</p>' +
-	'<h3>Release Groups</h3>' +
+	'<dl class="tabs mobile">' +
+		'<dd class="active"><a href="#">Release Groups</a></dd>' +
+		'<dd><a href="#">Recordings</a></dd>' +
+		'<dd><a href="#">Works</a></dd>' +
+	'</dl>' +
 	'<dl class="sub-nav">' +
 		'<dt>Artist</dt>' +
 		'<dd class="active"><a href="#">This Artist</a></dd>' +
