@@ -272,6 +272,7 @@ function loadArtistResult(artist) {
 		renderArtist(artist);
 	} else {
 		loadArtistReleaseGroups(artist);
+		loadingProgress();
 	}
 }
 
