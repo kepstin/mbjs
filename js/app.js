@@ -8,9 +8,8 @@ function loadingScreen() {
 	$('body').html(layoutTemplate.expand({
 		body: loadingTemplate.expand()
 	}));
-	var progressElement = $('#layout-progress');
-	progressElement.attr('max', progressWork);
-	progressElement.attr('value', progress);
+	progressWork = 1;
+	progress = 0;
 	fixupLinks();
 }
 
@@ -19,14 +18,19 @@ function loadingProgressAddWork(number) {
 		number = 1;
 	}
 	progressWork += number;
-	$('#layout-progress').attr('max', progressWork);
+	updateLoadingProgress();
 }
 function loadingProgress(number) {
 	if (number === undefined) {
 		number = 1;
 	}
 	progress += number;
-	$('#layout-progress').attr('value', progress);
+	updateLoadingProgress();
+}
+
+var updateLoadingProgress() {
+	var progressBar = document.getElementById('layout-progress');
+	progressBar.value = progress / progressWork;
 }
 
 function webserviceError(jqXHR) {
