@@ -645,11 +645,8 @@ var recordingTemplate = jsontemplate.Template(
 
 var workTemplate = jsontemplate.Template(
 	'<ul class="breadcrumbs">' +
-		'<li>' +
-			'{artist-credit|artist-credit}' +
-		'</li>' +
 		'<li class="current">' +
-			'{@|release-group-link}' +
+			'{@|work-link}' +
 		'</li>' +
 	'</ul>',
 	templateOptions
