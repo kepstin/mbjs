@@ -556,6 +556,8 @@ function renderWork(work) {
 		return;
 	}
 	
+	groupRelations(work);
+	
 	console.log(work);
 
 	renderLayout(workTemplate.expand(work));

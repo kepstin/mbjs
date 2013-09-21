@@ -652,7 +652,12 @@ var workTemplate = jsontemplate.Template(
 		'<li class="current">' +
 			'{@|work-link}' +
 		'</li>' +
-	'</ul>',
+	'</ul>' +
+	'<header>' +
+		'<h1>' +
+			'{@|work-link}' +
+		'</h1>' +
+	'</header>',
 	templateOptions
 );
 
