@@ -647,6 +647,18 @@ var recordingTemplate = jsontemplate.Template(
 	templateOptions
 );
 
+var workTemplate = jsontemplate.Template(
+	'<ul class="breadcrumbs">' +
+		'<li>' +
+			'{artist-credit|artist-credit}' +
+		'</li>' +
+		'<li class="current">' +
+			'{@|release-group-link}' +
+		'</li>' +
+	'</ul>',
+	templateOptions
+);
+
 var layoutTemplate = jsontemplate.Template(
 	'<nav class="top-bar">' +
 		'<ul>' +

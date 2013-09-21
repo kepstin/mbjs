@@ -530,6 +530,37 @@ function renderReleaseGroup(releaseGroup) {
 	renderLayout(releaseGroupTemplate.expand(releaseGroup));
 }
 
+function loadWork(mbid) {
+	loadingScreen();
+	rl.queue(function() {
+		$.get(wsAddr + '/work/' + mbid, {
+			inc: 'artist-rels+recording-rels+url-rels+annotation',
+			fmt: 'json',
+		}, function (work) {
+			loadWorkWikipedia(work);
+		}, 'json').error(webserviceError);
+	});
+}
+
+function loadWorkWikipedia(work) {
+	getWikiText(work, function (wikiText) {
+		work['wikipedia'] = wikiText;
+		work['loadedWikipedia'] = true;
+		renderWork(work);
+	});
+}
+
+function renderWork(work) {
+	if (!work['loadedWikipedia']) {
+		console.log("Called renderWork but Wikipedia isn't ready yet");
+		return;
+	}
+	
+	console.log(work);
+
+	renderLayout(workTemplate.expand(work));
+}
+
 function loadPage(state) {
 	console.log(state);
 	history.replaceState(state, '', window.location.pathname + state['search']);
@@ -546,6 +577,8 @@ function loadPage(state) {
 			loadArtist(state['artist']);
 		} else if (state['recording']) {
 			loadRecording(state['recording']);
+		} else if (state['work']) {
+			loadWork(state['work']);
 		} else {
 			body = errorTemplate.expand({
 				header: 'Error 400',
