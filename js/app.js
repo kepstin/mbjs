@@ -29,7 +29,11 @@ function loadingProgress(number) {
 }
 
 function updateLoadingProgress() {
-	var progressBar = document.getElementById('layout-progress');
+	var progressBar = document.getElementById('loading-progress');
+	if (!progressBar) {
+		console.log('updateLoadingProgress called, but no progress bar!');
+		return;
+	}
 	progressBar.value = progress / progressWork;
 }
 
