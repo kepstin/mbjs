@@ -28,7 +28,7 @@ function loadingProgress(number) {
 	updateLoadingProgress();
 }
 
-var updateLoadingProgress() {
+function updateLoadingProgress() {
 	var progressBar = document.getElementById('layout-progress');
 	progressBar.value = progress / progressWork;
 }
