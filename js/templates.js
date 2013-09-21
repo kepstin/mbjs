@@ -657,7 +657,12 @@ var workTemplate = jsontemplate.Template(
 		'<h1>' +
 			'{@|work-link}' +
 		'</h1>' +
-	'</header>',
+	'</header>' +
+	'{.section groupedRelations}{.section recording}' +
+		'{.section performance}{.repeated section backward}' +
+			'<p>{recording|recording-link}</p>' +
+		'{.end}{.end}' +
+	'{.end}{.end}',
 	templateOptions
 );
 
