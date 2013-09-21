@@ -128,6 +128,7 @@ function groupRelations(entity) {
 		if (rel['artist']) entityType = 'artist';
 		if (rel['url']) entityType = 'url';
 		if (rel['work']) entityType = 'work';
+		if (rel['recording']) entityType = 'recording';
 		var linkedEntity = rel[entityType];
 		if (!entityType) {
 			console.log("Couldn't determine entity type for relation:");
