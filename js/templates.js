@@ -658,6 +658,7 @@ var workTemplate = jsontemplate.Template(
 			'{@|work-link}' +
 		'</h1>' +
 	'</header>' +
+	'<h3>Recordings</h3>' +
 	'{.section groupedRelations}{.section recording}' +
 		'{.section performance}{.repeated section backward}' +
 			'<p>{recording|recording-link}</p>' +
@@ -685,6 +686,11 @@ var layoutTemplate = jsontemplate.Template(
 			'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
 		'</div>' +
 	'</footer>'
+);
+
+var loadingTemplate = jsontemplate.Template(
+	'<h1>Loading from MusicBrainz webservice…</h1>' +
+	'<progress id="loading-progress" value="0" max="1"></progress>'
 );
 
 var indexTemplate = jsontemplate.Template(

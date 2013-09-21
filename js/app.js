@@ -1,9 +1,32 @@
 var rl = new RateLimiter();
 var wsAddr = 'http://mbjs.kepstin.ca/ws/2';
 var browseLimit = 100;
+var progressWork = 1;
+var progress = 0;
 
 function loadingScreen() {
-	$('#body').html('<h1>Loading from MusicBrainz webservice…</h1>');
+	$('body').html(layoutTemplate.expand({
+		body: loadingTemplate.expand()
+	}));
+	var progressElement = $('#layout-progress');
+	progressElement.attr('max', progressWork);
+	progressElement.attr('value', progress);
+	fixupLinks();
+}
+
+function loadingProgressAddWork(number) {
+	if (number === undefined) {
+		number = 1;
+	}
+	progressWork += number;
+	$('#layout-progress').attr('max', progressWork);
+}
+function loadingProgress(number) {
+	if (number === undefined) {
+		number = 1;
+	}
+	progress += number;
+	$('#layout-progress').attr('value', progress);
 }
 
 function webserviceError(jqXHR) {
@@ -236,6 +259,7 @@ function loadArtistResult(artist) {
 		artist['loadedReleaseGroups'] = true;
 		artist['release-groups'] = [];
 		artist['text'] = ["For performance reasons, the release groups for Various Artists are blocked."];
+		loadingProgress();
 		renderArtist(artist);
 	} else {
 		loadArtistReleaseGroups(artist);
@@ -243,15 +267,18 @@ function loadArtistResult(artist) {
 }
 
 function loadArtistWikipedia(artist) {
+	loadingProgressAddWork();
 	getWikiText(artist, function (wikiText) {
 		artist['wikipedia'] = wikiText;
 		artist['loadedWikipedia'] = true;
+		loadingProgress();
 		renderArtist(artist);
 	});
 }
 
 function loadArtistReleaseGroups(artist, offset) {
 	if (offset === undefined) {
+		loadingProgressAddWork();
 		offset = 0;
 	}
 	rl.queue(function() {
@@ -268,11 +295,18 @@ function loadArtistReleaseGroups(artist, offset) {
 }
 
 function loadArtistReleaseGroupsPage(artist, data, offset) {
+	loadingProgress();
 	// First merge the loaded release groups into the artist
 	if (artist['release-groups']) {
 		artist['release-groups'] = artist['release-groups'].concat(data['release-groups']);
 	} else {
 		artist['release-groups'] = data['release-groups'];
+	}
+	
+	// Add work if there's more pages
+	if (offset == 0) {
+		var remainingPages = Math.ceil(data['release-group-count'] / browseLimit) - 1;
+		loadingProgressAddWork(remainingPages);
 	}
 
 	// Check if we need to load more release groups
