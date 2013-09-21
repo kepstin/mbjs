@@ -535,7 +535,7 @@ function loadWork(mbid) {
 	loadingScreen();
 	rl.queue(function() {
 		$.get(wsAddr + '/work/' + mbid, {
-			inc: 'artist-credits+artist-rels+recording-rels+url-rels+annotation',
+			inc: 'artist-rels+recording-rels+url-rels+annotation',
 			fmt: 'json',
 		}, function (work) {
 			loadWorkWikipedia(work);
