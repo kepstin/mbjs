@@ -668,15 +668,13 @@ var workTemplate = jsontemplate.Template(
 );
 
 var layoutTemplate = jsontemplate.Template(
-	'<div class="contain-to-grid">' + 
-		'<nav class="top-bar">' +
-			'<ul>' +
-				'<li class="name">' +
-					'<h1><a href="">MB JS Demo</a></h1>' +
-				'</li>' +
-			'</ul>' +
-		'</nav>' +
-	'</div>' +
+	'<nav class="navbar navbar-default">' +
+		'<div class="navbar-header">' +
+			'<a href="" class="navbar-brand">' +
+				'MB JS Demo' +
+			'</a>' +
+		'</div>' +
+	'</nav>' +
 	'<section class="row">' +
 		'<div id="body" class="small-12 columns">' +
 			'{body|raw}' +
