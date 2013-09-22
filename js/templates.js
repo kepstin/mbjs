@@ -676,12 +676,12 @@ var layoutTemplate = jsontemplate.Template(
 		'</div>' +
 	'</nav>' +
 	'<section class="row">' +
-		'<div id="body" class="small-12 columns">' +
+		'<div id="body" class="col-xs-12">' +
 			'{body|raw}' +
 		'</div>' +
 	'</section>' +
 	'<footer class="row">' +
-		'<div class="small-12 columns">' +
+		'<div class="col-xs-12">' +
 			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
 			'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
 		'</div>' +
