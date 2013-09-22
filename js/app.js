@@ -679,7 +679,9 @@ function fixupLinks() {
 		}
 	});
 	twttr.widgets.load();
-	FB.XFBML.parse();
+	if (!FB === undefined) {
+		FB.XFBML.parse();
+	}
 	gapi.plus.go();
 }
 
