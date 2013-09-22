@@ -692,7 +692,7 @@ var layoutTemplate = jsontemplate.Template(
 
 var loadingTemplate = jsontemplate.Template(
 	'<h1>Loading from MusicBrainz webservice…</h1>' +
-	'<div class="progress"><span class="meter" id="loading-progress" style="width: 0"></span></div>'
+	'<div class="progress"><span class="progress-bar" id="loading-progress" style="width: 0"></span></div>'
 );
 
 var indexTemplate = jsontemplate.Template(
