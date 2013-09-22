@@ -581,14 +581,14 @@ var releaseGroupTemplate = jsontemplate.Template(
 	templateOptions);
 
 var recordingTemplate = jsontemplate.Template(
-	'<ul class="breadcrumbs">' +
+	'<ol class="breadcrumb">' +
 		'<li>' +
 			'{artist-credit|artist-credit}' +
 		'</li>' +
 		'<li class="current">' +
 			'{@|recording-link}' +
 		'</li>' +
-	'</ul>' +
+	'</ol>' +
 	'<header>' +
 		'<h1>' +
 			'{@|recording-link}' +
@@ -635,15 +635,15 @@ var recordingTemplate = jsontemplate.Template(
 		'{.end}{.end}' +
 	'{.end}' +
 	'<h3>Appears on Releases</h3>' +
-	'<ul class="large-block-grid-2">' +
+	'<div class="row">' +
 		'{.repeated section releases}' +
-			'<li>' +
+			'<div class="col-md-6">' +
 				'{@|release-tile}' +
-			'</li>' +
+			'</div>' +
 		/*'{.else}' +
 			'<li><p>This is a stand-alone recording.</p></li>' +*/
 		'{.end}' +
-	'</ul>',
+	'</div>',
 	templateOptions
 );
 
