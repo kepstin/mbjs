@@ -294,10 +294,10 @@ function formatTrackCount(r) {
 
 var releaseTileTemplate = jsontemplate.Template(
 	'<div class="row release-tile">' +
-		'<div class="small-3 columns">' +
+		'<div class="col-xs-3">' +
 			'{@|release-cover-art}' +
 		'</div>' +
-		'<div class="small-9 columns">' +
+		'<div class="col-xs-9">' +
 			'<h3>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
