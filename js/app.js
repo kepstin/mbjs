@@ -34,8 +34,9 @@ function updateLoadingProgress() {
 		console.log('updateLoadingProgress called, but no progress bar!');
 		return;
 	}
-	console.log('Progress is ' + progress + ' out of ' + progressWork);
-	progressBar.value = progress / progressWork;
+	var progressPercent = progress / progressWork * 100;
+	console.log('Progress is ' + progress + ' out of ' + progressWork + '(' + progressPercent + '%)');
+	progressBar.style.width = '' + progressPercent + '%';
 }
 
 function webserviceError(jqXHR) {
