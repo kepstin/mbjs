@@ -1,3 +1,18 @@
 .navbar {
 	margin-top: 30px;
 }
+
+.cover-art, .artist-image {
+  max-height: 16em;
+  text-align: center;
+}
+/* line 55, ../sass/app.scss */
+.cover-art img, .artist-image img {
+  max-height: inherit;
+}
+
+/* line 61, ../sass/app.scss */
+.release-group-tile .cover-art, .release-tile .cover-art {
+  height: 8em;
+  max-height: 8em;
+}
