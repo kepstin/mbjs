@@ -372,9 +372,9 @@ function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); 
 var artistTemplate = jsontemplate.Template(
 	'<header class="row">' +
 		'{.section image}' +
-			'<div class="large-9 columns">' +
+			'<div class="col-md-9">' +
 		'{.or}' +
-			'<div class="large-12 columns">' +
+			'<div class="col-md-12">' +
 		'{.end}' +
 			'<h1>' +
 				'{@|artist-link}' +
@@ -423,7 +423,7 @@ var artistTemplate = jsontemplate.Template(
 			'{.end}' + */
 		'</div>' +
 		'{.section image}' +
-			'<div class="large-3 columns">' +
+			'<div class="col-md-3">' +
 				'<div class="artist-image">' +
 					'<img src="{image|htmltag}" alt="">' +
 				'</div>' +
@@ -501,17 +501,17 @@ var artistTemplate = jsontemplate.Template(
 	'</dl>' +
 	'{.repeated section groupedReleaseGroups}' +
 		'<div class="row">' +
-			'<div class="large-1 column">' +
+			'<div class="col-md-1">' +
 				'<h4>{year|html}</h4>' +
 			'</div>' +
-			'<div class="large-11 columns">' +
-				'<ul class="large-block-grid-2">' +
+			'<div class="col-md-11">' +
+				'<div class="row">' +
 					'{.repeated section releaseGroups}' +
-						'<li>' +
+						'<div class="col-md-6">' +
 							'{@|release-group-tile}' +
-						'</li>' +
+						'</div>' +
 					'{.end}' +
-				'</ul>' +
+				'</div>' +
 			'</div>' +
 		'</div>' +
 	'{.end}' +
