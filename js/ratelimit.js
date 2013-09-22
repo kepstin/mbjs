@@ -26,19 +26,15 @@ function RateLimiter(period, burst) {
 	this.queue = function(request) {
 		// If there is space in the outqueue, do the request immediately.
 		if (this.outQueue.length < this.burst) {
-			console.log("RateLimiter: Performing immediate request");
 			request();
 			this.outQueue.push(new Date().getTime());
 		} else {
 			this.inQueue.push(request);
-			console.log("RateLimiter: Queueing request");
 		}
 		
-		console.log("RateLimiter: outQueue: " + this.outQueue.length + " inQueue: " + this.inQueue.length);
 		
 		// Start the timer if it wasn't previously running.
 		if (!this.active) {
-			console.log("RateLimiter: starting timer");
 			this.startTimer();
 		}
 	}
@@ -46,36 +42,29 @@ function RateLimiter(period, burst) {
 	this.startTimer = function() {
 		this.active = true;
 		var delay = Math.max(this.period, this.burstPeriod - (new Date().getTime() - this.outQueue[0]));
-		console.log("RateLimiter: Timer delay: " + delay);
 		setTimeout(function(foo) {foo.next();}, delay , this);
 	}
 	
 	this.next = function() {
-		console.log("RateLimiter: timer tick");
 		// If the oldest element in outQueue is more than period * burst old, remove it
 		if (this.outQueue.length > 0) {
 			if (this.outQueue[0] + this.burstPeriod <= new Date().getTime()) {
 				this.outQueue.shift();
-				console.log("RateLimiter: dropping old request from outQueue");
 			}
 		}
 		
 		// Do more requests if we have available space in outQueue
 		while (this.outQueue.length < this.burst && this.inQueue.length > 0) {
 			var request = this.inQueue.shift();
-			console.log("RateLimiter: Performing queued request");
 			request();
 			this.outQueue.push(new Date().getTime());
 		}
-		
-		console.log("RateLimiter: outQueue: " + this.outQueue.length + " inQueue: " + this.inQueue.length);
 		
 		// Queue the next timer tick if outQueue isn't empty
 		if (this.outQueue.length > 0) {
 			this.startTimer();
 		} else {
 			this.active = false;
-			console.log("RateLimiter: stopping timer");
 		}
 	}
 }
