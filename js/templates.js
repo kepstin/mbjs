@@ -668,24 +668,26 @@ var workTemplate = jsontemplate.Template(
 );
 
 var layoutTemplate = jsontemplate.Template(
-	'<nav class="navbar navbar-default">' +
-		'<div class="navbar-header">' +
-			'<a href="" class="navbar-brand">' +
-				'MB JS Demo' +
-			'</a>' +
-		'</div>' +
-	'</nav>' +
-	'<section class="row">' +
-		'<div id="body" class="col-xs-12">' +
-			'{body|raw}' +
-		'</div>' +
-	'</section>' +
-	'<footer class="row">' +
-		'<div class="col-xs-12">' +
-			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
-			'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
-		'</div>' +
-	'</footer>'
+	'<div class="container">' +
+		'<nav class="navbar navbar-default">' +
+			'<div class="navbar-header">' +
+				'<a href="" class="navbar-brand">' +
+					'MB JS Demo' +
+				'</a>' +
+			'</div>' +
+		'</nav>' +
+		'<section class="row">' +
+			'<div id="body" class="col-xs-12">' +
+				'{body|raw}' +
+			'</div>' +
+		'</section>' +
+		'<footer class="row">' +
+			'<div class="col-xs-12">' +
+				'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
+				'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
+			'</div>' +
+		'</footer>' +
+	'</div>'
 );
 
 var loadingTemplate = jsontemplate.Template(
