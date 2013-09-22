@@ -332,12 +332,12 @@ function formatReleaseTile(r) { return releaseTileTemplate.expand(r); }
 
 var releaseGroupTileTemplate = jsontemplate.Template(
 	'<div class="row release-group-tile">' +
-		'<div class="small-3 columns">' +
+		'<div class="col-xs-3">' +
 			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
-		'<div class="small-9 columns">' +
+		'<div class="col-xs-9">' +
 			'<h3>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
@@ -425,7 +425,7 @@ var artistTemplate = jsontemplate.Template(
 		'{.section image}' +
 			'<div class="col-md-3">' +
 				'<div class="artist-image">' +
-					'<img src="{image|htmltag}" alt="">' +
+					'<img class="img-responsive" src="{image|htmltag}" alt="">' +
 				'</div>' +
 			'</div>' +
 		'{.end}' +
