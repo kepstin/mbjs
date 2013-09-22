@@ -528,16 +528,16 @@ var wikiLinkTemplate = jsontemplate.Template(
 templateOptions);
 
 var releaseGroupTemplate = jsontemplate.Template(
-	'<ul class="breadcrumbs">' +
+	'<ol class="breadcrumb">' +
 		'<li>' +
 			'{artist-credit|artist-credit}' +
 		'</li>' +
 		'<li class="current">' +
 			'{@|release-group-link}' +
 		'</li>' +
-	'</ul>' +
+	'</ol>' +
 	'<header class="row">' +
-		'<div class="large-9 columns">' +
+		'<div class="col-md-9">' +
 			'<h1>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
@@ -565,19 +565,19 @@ var releaseGroupTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-		'<div class="large-3 columns">' +
+		'<div class="col-md-3">' +
 			'<div class="cover-art">' +
 				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
 	'</header>' +
-	'<ul class="large-block-grid-2">' +
+	'<div class="row">' +
 		'{.repeated section releases}' +
-			'<li>' +
+			'<div class="col-md-6">' +
 				'{@|release-tile}' +
-			'</li>' +
+			'</div>' +
 		'{.end}' +
-	'</ul>',
+	'</div>',
 	templateOptions);
 
 var recordingTemplate = jsontemplate.Template(
