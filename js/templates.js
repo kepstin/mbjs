@@ -648,11 +648,6 @@ var recordingTemplate = jsontemplate.Template(
 );
 
 var workTemplate = jsontemplate.Template(
-	'<ul class="breadcrumbs">' +
-		'<li class="current">' +
-			'{@|work-link}' +
-		'</li>' +
-	'</ul>' +
 	'<header>' +
 		'<h1>' +
 			'{@|work-link}' +
