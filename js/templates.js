@@ -294,10 +294,10 @@ function formatTrackCount(r) {
 
 var releaseTileTemplate = jsontemplate.Template(
 	'<div class="row release-tile">' +
-		'<div class="three mobile-one columns">' +
+		'<div class="small-3 columns">' +
 			'{@|release-cover-art}' +
 		'</div>' +
-		'<div class="nine mobile-three columns">' +
+		'<div class="small-9 columns">' +
 			'<h3>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
@@ -332,12 +332,12 @@ function formatReleaseTile(r) { return releaseTileTemplate.expand(r); }
 
 var releaseGroupTileTemplate = jsontemplate.Template(
 	'<div class="row release-group-tile">' +
-		'<div class="three mobile-one columns">' +
+		'<div class="small-3 columns">' +
 			'<div class="cover-art">' +
 				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
-		'<div class="nine mobile-three columns">' +
+		'<div class="small-9 columns">' +
 			'<h3>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
@@ -372,9 +372,9 @@ function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); 
 var artistTemplate = jsontemplate.Template(
 	'<header class="row">' +
 		'{.section image}' +
-			'<div class="nine columns">' +
+			'<div class="large-9 columns">' +
 		'{.or}' +
-			'<div class="twelve columns">' +
+			'<div class="large-12 columns">' +
 		'{.end}' +
 			'<h1>' +
 				'{@|artist-link}' +
@@ -423,7 +423,7 @@ var artistTemplate = jsontemplate.Template(
 			'{.end}' + */
 		'</div>' +
 		'{.section image}' +
-			'<div class="three columns">' +
+			'<div class="large-3 columns">' +
 				'<div class="artist-image">' +
 					'<img src="{image|htmltag}" alt="">' +
 				'</div>' +
@@ -501,11 +501,11 @@ var artistTemplate = jsontemplate.Template(
 	'</dl>' +
 	'{.repeated section groupedReleaseGroups}' +
 		'<div class="row">' +
-			'<div class="one column">' +
+			'<div class="large-1 column">' +
 				'<h4>{year|html}</h4>' +
 			'</div>' +
-			'<div class="eleven columns">' +
-				'<ul class="block-grid two-up mobile">' +
+			'<div class="large-11 columns">' +
+				'<ul class="large-block-grid-2">' +
 					'{.repeated section releaseGroups}' +
 						'<li>' +
 							'{@|release-group-tile}' +
@@ -537,7 +537,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 		'</li>' +
 	'</ul>' +
 	'<header class="row">' +
-		'<div class="nine columns">' +
+		'<div class="large-9 columns">' +
 			'<h1>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
@@ -565,13 +565,13 @@ var releaseGroupTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-		'<div class="three columns">' +
+		'<div class="large-3 columns">' +
 			'<div class="cover-art">' +
 				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
 	'</header>' +
-	'<ul class="block-grid two-up mobile">' +
+	'<ul class="large-block-grid-2">' +
 		'{.repeated section releases}' +
 			'<li>' +
 				'{@|release-tile}' +
@@ -635,7 +635,7 @@ var recordingTemplate = jsontemplate.Template(
 		'{.end}{.end}' +
 	'{.end}' +
 	'<h3>Appears on Releases</h3>' +
-	'<ul class="block-grid two-up mobile">' +
+	'<ul class="large-block-grid-2">' +
 		'{.repeated section releases}' +
 			'<li>' +
 				'{@|release-tile}' +
@@ -668,20 +668,22 @@ var workTemplate = jsontemplate.Template(
 );
 
 var layoutTemplate = jsontemplate.Template(
-	'<nav class="top-bar">' +
-		'<ul>' +
-			'<li class="name">' +
-				'<h1><a href="">MB JS Demo</a></h1>' +
-			'</li>' +
-		'</ul>' +
-	'</nav>' +
+	'<div class="contain-to-grid">' + 
+		'<nav class="top-bar">' +
+			'<ul>' +
+				'<li class="name">' +
+					'<h1><a href="">MB JS Demo</a></h1>' +
+				'</li>' +
+			'</ul>' +
+		'</nav>' +
+	'</div>' +
 	'<section class="row">' +
-		'<div id="body" class="twelve columns">' +
+		'<div id="body" class="small-12 columns">' +
 			'{body|raw}' +
 		'</div>' +
 	'</section>' +
 	'<footer class="row">' +
-		'<div class="twelve columns">' +
+		'<div class="small-12 columns">' +
 			'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
 			'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
 		'</div>' +
