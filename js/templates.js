@@ -162,7 +162,7 @@ var artistCreditTemplate = jsontemplate.Template(
 function formatArtistCredit(ac) { return artistCreditTemplate.expand(ac); }
 
 var releaseTemplate = jsontemplate.Template(
-	'<ul class="breadcrumbs">' +
+	'<ol class="breadcrumb">' +
 		'<li>' +
 			'{release-group.artist-credit|artist-credit}' +
 		'</li>' +
@@ -172,9 +172,9 @@ var releaseTemplate = jsontemplate.Template(
 		'<li class="current">' +
 			'{@|release-link}' +
 		'</li>' +
-	'</ul>' +
+	'</ol>' +
 	'<header class="row">' +
-		'<div class="nine columns">' +
+		'<div class="col-md-9">' +
 			'<h1>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
@@ -206,7 +206,7 @@ var releaseTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-		'<div class="three columns">' +
+		'<div class="col-md-3">' +
 			'{@|release-cover-art}' +
 		'</div>' +
 
@@ -222,18 +222,18 @@ var releaseTemplate = jsontemplate.Template(
 			'{.repeated section tracks}' +
 				'<div class="track">' +
 					'<div class="row">' +
-						'<div class="seven columns">' +
+						'<div class="col-md-7">' +
 							'<div class="row">' +
-								'<div class="two mobile-one column track_number">{.section number}{@|html}{.end}</div>' +
-								'<div class="eight mobile-two columns track_name">' +
+								'<div class="col-xs-2 track_number">{.section number}{@|html}{.end}</div>' +
+								'<div class="col-xs-8 track_name">' +
 									'{artist-credit|artist-credit} – ' +
 									'<a href="?recording={recording.id|htmltag}">{title}</a>' +
 									'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
 								'</div>' +
-								'<div class="two mobile-one column track_length">{.section length}{@|recording-time}{.end}</div>' +
+								'<div class="col-xs-2 track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="five columns credits">' +
+						'<div class="col-md-5 credits">' +
 	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
 		'{.repeated section forward}' +
 			'{@|relation-name} {work|work-link}' +
