@@ -679,7 +679,7 @@ function fixupLinks() {
 		}
 	});
 	twttr.widgets.load();
-	if (typeof(FB.XFBML) !== undefined) {
+	if (typeof FB !== 'undefined') {
 		FB.XFBML.parse();
 	}
 	gapi.plus.go();
