@@ -625,9 +625,10 @@ function luceneBuildQuery(searchString) {
 
 function loadSearchArtist(query) {
 	var escapedQuery = luceneBuildQuery(query);
-	var fullQuery = "artist:(" + escapedQuery + ")^1.0 OR alias:(" +
-			escapedQuery + ")^1.0 OR sortname:(" +
-			escapedQuery + ")^0.75";
+	var fullQuery = 'artist:(' + escapedQuery + ')^1.0 OR alias:(' +
+			escapedQuery + ')^1.0 OR sortname:(' +
+			escapedQuery + ')^0.75 OR comment:(' +
+			escapedQuery + ')^0.5';
 	rl.queue(function() {
 		$.get(wsAddr + '/artist', {
 			'query': fullQuery,
