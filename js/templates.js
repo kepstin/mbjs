@@ -360,12 +360,12 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 					' <small>({@|html})</small>' +
 				'{.end}' +
 				'{.section primary-type}' +
-					' <span class="label">' +
+					' <span class="label label-primary">' +
 						'{@|html}' +
 					'</span>' +
 				'{.end}' +
 				'{.repeated section secondary-types}' +
-					' <span class="secondary label">' +
+					' <span class="label label-default">' +
 						'{@|html}' +
 					'</span>' +
 				'{.end}' +
