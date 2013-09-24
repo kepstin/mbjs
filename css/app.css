@@ -23,3 +23,5 @@ h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:fi
 .release-group-tile, .release-tile {
   margin-bottom: 20px;
 }
+
+.release-tiles > :nth-child(2n+1), .release-group-tiles > :nth-child(2n+1) { clear: both; }

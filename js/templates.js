@@ -510,7 +510,7 @@ var artistTemplate = jsontemplate.Template(
 				'<h4>{year|html}</h4>' +
 			'</div>' +
 			'<div class="col-md-11">' +
-				'<div class="row">' +
+				'<div class="row release-group-tiles">' +
 					'{.repeated section releaseGroups}' +
 						'<div class="col-md-6">' +
 							'{@|release-group-tile}' +
@@ -576,7 +576,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 			'</div>' +
 		'</div>' +
 	'</header>' +
-	'<div class="row">' +
+	'<div class="row release-tiles">' +
 		'{.repeated section releases}' +
 			'<div class="col-md-6">' +
 				'{@|release-tile}' +
@@ -640,7 +640,7 @@ var recordingTemplate = jsontemplate.Template(
 		'{.end}{.end}' +
 	'{.end}' +
 	'<h3>Appears on Releases</h3>' +
-	'<div class="row">' +
+	'<div class="row release-tiles">' +
 		'{.repeated section releases}' +
 			'<div class="col-md-6">' +
 				'{@|release-tile}' +
