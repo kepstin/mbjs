@@ -639,7 +639,7 @@ function loadSearchArtist(query) {
 function renderSearchArtist(artistList, originalQuery) {
 	console.log(artistList);
 
-	renderLayout(searchArtistTemplate.expand(artistList);
+	renderLayout(searchArtistTemplate.expand(artistList));
 }
 
 function loadPage(state) {
