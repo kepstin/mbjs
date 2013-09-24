@@ -354,11 +354,7 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 			'</div>' +
 		'</div>' +
 		'<div class="col-xs-9">' +
-			'<h3>' +
-				'{@|release-group-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
+			'<div class="tile-labels">' +
 				'{.section primary-type}' +
 					' <span class="label label-primary">' +
 						'{@|html}' +
@@ -368,6 +364,12 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 					' <span class="label label-default">' +
 						'{@|html}' +
 					'</span>' +
+				'{.end}' +
+			'</div>' +
+			'<h3>' +
+				'{@|release-group-link}' +
+				'{.section disambiguation}' +
+					' <small>({@|html})</small>' +
 				'{.end}' +
 				'<br>' +
 				'<small>' +
