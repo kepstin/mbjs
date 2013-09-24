@@ -609,6 +609,39 @@ function renderWork(work) {
 	renderLayout(workTemplate.expand(work));
 }
 
+function luceneTermEscape(term) {
+	return term.replace(/[+!(){}\[\]^"~*:\\\/-]|&&|\|\|/g, "\\$&");
+}
+
+function luceneBuildQuery(searchString) {
+	var terms = searchString.split(/\s+/);
+	var escapedTerms = terms.map(function(term) {
+		luceneTermEscape(term) + "~";
+	);
+	var query = escapedTerms.join(" AND ")
+}
+
+function loadSearchArtist(query) {
+	var escapedQuery = luceneBuildQuery(query);
+	var fullQuery = "artist:(" + escapedQuery + ")^1.0 OR alias:(" +
+			escapedQuery + ")^0.8 OR sorname:(" +
+			escapedQuery + ")^0.6";
+	rl.queue(function() {
+		$.get(wsAddr + '/artist', {
+			'query': fullQuery,
+			fmt:     'json',
+		}, function(data) {
+			renderSearchArtist(data, query);
+		}, 'json').error(webserviceError);
+	});
+}
+
+function renderSearchArtist(artistList, originalQuery) {
+	console.log(artistList);
+
+	renderLayout(searchArtistTemplate.expand(artistList);
+}
+
 function loadPage(state) {
 	console.log(state);
 	history.replaceState(state, '', window.location.pathname + state['search']);
@@ -627,6 +660,8 @@ function loadPage(state) {
 			loadRecording(state['recording']);
 		} else if (state['work']) {
 			loadWork(state['work']);
+		} else if (state['query'] && state['entity'] == 'artist') {
+			loadSearchArtist(state['query']);
 		} else {
 			body = errorTemplate.expand({
 				header: 'Error 400',

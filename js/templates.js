@@ -662,6 +662,13 @@ var workTemplate = jsontemplate.Template(
 	templateOptions
 );
 
+var searchArtistTemplate = jsontemplate.Template(
+	'<header>' +
+		'<h1>Artist Search Results</h1>' +
+	'</header>',
+	templateOptions
+):
+
 var layoutTemplate = jsontemplate.Template(
 	'<div class="container">' +
 		'<nav class="navbar navbar-default">' +
