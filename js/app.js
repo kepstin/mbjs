@@ -618,7 +618,7 @@ function luceneBuildQuery(searchString) {
 	var escapedTerms = terms.map(function(term) {
 		luceneTermEscape(term) + "~";
 	});
-	var query = escapedTerms.join(" AND ")
+	return escapedTerms.join(" AND ")
 }
 
 function loadSearchArtist(query) {
@@ -630,13 +630,15 @@ function loadSearchArtist(query) {
 		$.get(wsAddr + '/artist', {
 			'query': fullQuery,
 			fmt:     'json',
-		}, function(data) {
-			renderSearchArtist(data, query);
+		}, function(searchResult) {
+			renderSearchArtist(searchResult, query);
 		}, 'json').error(webserviceError);
 	});
 }
 
-function renderSearchArtist(artistList, originalQuery) {
+function renderSearchArtist(searchResult, originalQuery) {
+	searchResult['query'] = originalQuery;
+
 	console.log(artistList);
 
 	renderLayout(searchArtistTemplate.expand(artistList));
