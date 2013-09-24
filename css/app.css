@@ -16,7 +16,7 @@
   height: 8em;
   max-height: 8em;
 }
-h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child {
+.release-group-tile h3, .release-tile h3 {
   margin-top: 0;
 }
 
@@ -27,3 +27,4 @@ h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:fi
 .release-tiles > :nth-child(2n+1), .release-group-tiles > :nth-child(2n+1) { clear: both; }
 
 .tile-labels { float: right; }
+
