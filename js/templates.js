@@ -685,9 +685,23 @@ var layoutTemplate = jsontemplate.Template(
 	'<div class="container">' +
 		'<nav class="navbar navbar-default">' +
 			'<div class="navbar-header">' +
+				'<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
+					'<span class="sr-only">Toggle navigation</span>' +
+					'<span class="icon-bar"></span>' +
+					'<span class="icon-bar"></span>' +
+					'<span class="icon-bar"></span>' +
+				'</button>' +
 				'<a href="" class="navbar-brand">' +
 					'MB JS Demo' +
 				'</a>' +
+			'</div>' +
+			'<div class="collapse navbar-collapse">' +
+				'<form class="navbar-form navbar-left" role="search">' +
+					'<div class="form-group">' +
+						'<input type="text" class="form-control" placeholder="Search">'
+					'</div>' +
+					'<button type="submit" class="btn btn-default">Submit</button>' +
+				'</form>' +
 			'</div>' +
 		'</nav>' +
 		'<section class="row">' +
