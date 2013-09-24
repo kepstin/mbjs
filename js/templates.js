@@ -667,7 +667,7 @@ var searchArtistTemplate = jsontemplate.Template(
 		'<h1>Artist Search Results</h1>' +
 	'</header>',
 	templateOptions
-):
+);
 
 var layoutTemplate = jsontemplate.Template(
 	'<div class="container">' +
