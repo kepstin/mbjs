@@ -663,7 +663,7 @@ function loadPage(state) {
 		} else if (state['work']) {
 			loadWork(state['work']);
 		} else if (state['query'] && state['entity'] == 'artist') {
-			loadSearchArtist(state['query']);
+			loadSearchArtist(decodeURIComponent(state['query']));
 		} else {
 			body = errorTemplate.expand({
 				header: 'Error 400',
