@@ -615,10 +615,12 @@ function luceneTermEscape(term) {
 
 function luceneBuildQuery(searchString) {
 	var terms = searchString.split(/\s+/);
-	var escapedTerms = terms.map(function(term) {
-		return luceneTermEscape(term) + "~";
-	});
-	return '(' + escapedTerms.join(' AND ') + ') OR (' + escapedTerms.join(' OR ') + ')^0.5';
+	var escapedTerms = terms.map(luceneTermEscape);
+	var fuzzyTerms = escapedTerms.map(function(term) { return term + "~" });
+	return '(' + escapedTerms.join(' AND ') + ') OR (' +
+		fuzzyTerms.join(' AND ') + ')^0.75 OR (' +
+		escapedTerms.join(' OR ') + ')^0.5 OR (' +
+		fuzzyTerms.join(' OR ') + ')^0.25';
 }
 
 function loadSearchArtist(query) {
