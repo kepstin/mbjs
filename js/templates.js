@@ -668,7 +668,7 @@ var searchArtistTemplate = jsontemplate.Template(
 	'</header>' +
 	'{.repeated section artist}' +
 		'<p>' +
-			'{name} ' +
+			'{@|artist-link} ' +
 		'</p>' +
 	'{.end}',
 	templateOptions
