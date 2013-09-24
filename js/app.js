@@ -617,7 +617,7 @@ function luceneBuildQuery(searchString) {
 	var terms = searchString.split(/\s+/);
 	var escapedTerms = terms.map(function(term) {
 		luceneTermEscape(term) + "~";
-	);
+	});
 	var query = escapedTerms.join(" AND ")
 }
 
