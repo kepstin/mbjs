@@ -703,9 +703,14 @@ var layoutTemplate = jsontemplate.Template(
 						'</select>' +
 					'</div>' +
 					'<div class="form-group">' +
-						'<input type="text" class="form-control" placeholder="Search">' +
+						'<div class="input-group">' +
+							'<input type="text" class="form-control" placeholder="Search">' +
+							'<span class="input-group-btn">' +
+								'<button type="submit" class="btn btn-default">Submit</button>' +
+							'</span>' +
+						'</div>' +
 					'</div>' +
-					'<button type="submit" class="btn btn-default">Submit</button>' +
+
 				'</form>' +
 			'</div>' +
 		'</nav>' +
