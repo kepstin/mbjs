@@ -628,6 +628,7 @@ function loadSearchArtist(query) {
 	var fullQuery = 'artist:(' + escapedQuery + ')^1.0 OR alias:(' +
 			escapedQuery + ')^1.0 OR sortname:(' +
 			escapedQuery + ')^0.75 OR comment:(' +
+			escapedQuery + ')^0.5 OR tag:(' +
 			escapedQuery + ')^0.5';
 	rl.queue(function() {
 		$.get(wsAddr + '/artist', {
