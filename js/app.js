@@ -618,7 +618,7 @@ function luceneBuildQuery(searchString) {
 	var escapedTerms = terms.map(function(term) {
 		return luceneTermEscape(term) + "~";
 	});
-	return escapedTerms.join(" AND ")
+	return escapedTerms.join(' AND ') + ' OR (' + escapedTerms.join(' OR ') + ')^0.5';
 }
 
 function loadSearchArtist(query) {
