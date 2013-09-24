@@ -721,7 +721,9 @@ function fixupLinks() {
 			});
 		}
 	});
-	twttr.widgets.load();
+	if (typeof twttr !== 'undefined') {
+		twttr.widgets.load();
+	}
 	if (typeof FB !== 'undefined') {
 		FB.XFBML.parse();
 	}
