@@ -696,15 +696,15 @@ var layoutTemplate = jsontemplate.Template(
 				'</a>' +
 			'</div>' +
 			'<div class="collapse navbar-collapse">' +
-				'<form class="navbar-form navbar-right" role="search">' +
+				'<form action="" method="get" class="navbar-form navbar-right" role="search">' +
 					'<div class="form-group">' +
-						'<select class="form-control">' +
+						'<select name="entity" class="form-control">' +
 							'<option value="artist">Artist</option>' +
 						'</select>' +
 					'</div>' +
 					'<div class="form-group">' +
 						'<div class="input-group">' +
-							'<input type="text" class="form-control" placeholder="Search">' +
+							'<input name="query" type="search" class="form-control" placeholder="Search">' +
 							'<span class="input-group-btn">' +
 								'<button type="submit" class="btn btn-default">Submit</button>' +
 							'</span>' +
