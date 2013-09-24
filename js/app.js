@@ -639,9 +639,9 @@ function loadSearchArtist(query) {
 function renderSearchArtist(searchResult, originalQuery) {
 	searchResult['query'] = originalQuery;
 
-	console.log(artistList);
+	console.log(searchResult);
 
-	renderLayout(searchArtistTemplate.expand(artistList));
+	renderLayout(searchArtistTemplate.expand(searchResult));
 }
 
 function loadPage(state) {
