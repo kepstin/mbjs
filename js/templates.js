@@ -698,6 +698,11 @@ var layoutTemplate = jsontemplate.Template(
 			'<div class="collapse navbar-collapse">' +
 				'<form class="navbar-form navbar-right" role="search">' +
 					'<div class="form-group">' +
+						'<select class="form-control">' +
+							'<option value="artist">Artist</option>' +
+						'</select>' +
+					'</div>' +
+					'<div class="form-group">' +
 						'<input type="text" class="form-control" placeholder="Search">' +
 					'</div>' +
 					'<button type="submit" class="btn btn-default">Submit</button>' +
