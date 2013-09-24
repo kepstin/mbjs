@@ -14,7 +14,8 @@ var templateOptions = {
 		'track-count': formatTrackCount,
 		'recording-time': formatRecordingTime,
 		'release-cover-art': formatReleaseCoverArt,
-		'relation-name': formatRelationName
+		'relation-name': formatRelationName,
+		'life-span': formatLifeSpan
 	}
 };
 
@@ -32,6 +33,21 @@ var coverArtTemplate = jsontemplate.Template(
 		'<img src="{url}" onerror="coverArtMissing(this);" alt="">' +
 	'</div>'
 );
+
+var lifeSpanTemplate = jsontemplate.Template(
+	'{.section begin}' +
+		'{@|html}' +
+	'{.end}' +
+	'–' +
+	'{.section end}' +
+		'{@|html}' +
+	'{.or}' +
+		'{.section ended}' +
+			'?' +
+		'{.end}' +
+	'{.end}'
+);
+function formatLifeSpan(ls) { return lifeSpanTemplate.expand(ls); }
 
 function formatReleaseCoverArt(r) {
 	coverArtURL = "http://mbjs.kepstin.ca/images/missingart.png";
@@ -392,18 +408,7 @@ var artistTemplate = jsontemplate.Template(
 					', {name|html}' +
 				'{.end}' +
 				'{.section life-span}' +
-					', ' +
-					'{.section begin}' +
-						'{@|html}' +
-					'{.end}' +
-					'–' +
-					'{.section end}' +
-						'{@|html}' +
-					'{.or}' +
-						'{.section ended}' +
-							'?' +
-						'{.end}' +
-					'{.end}' +
+					', {@|life-span}' +
 				'{.end}' +
 			'</p>' +
 			'{.section twitter}' +
@@ -668,7 +673,7 @@ var searchArtistTemplate = jsontemplate.Template(
 	'</header>' +
 	'{.repeated section artist}' +
 		'<p>' +
-			'{@|artist-link} ' +
+			'{score} {@|artist-link} {life-span|life-span}' +
 		'</p>' +
 	'{.end}',
 	templateOptions
