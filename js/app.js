@@ -725,7 +725,9 @@ function fixupLinks() {
 	if (typeof FB !== 'undefined') {
 		FB.XFBML.parse();
 	}
-	gapi.plus.go();
+	if (typeof gapi !== 'undefined') {
+		gapi.plus.go();
+	}
 }
 
 /* Generate a history "state" object from current browser state */
