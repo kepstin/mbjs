@@ -616,7 +616,7 @@ function luceneTermEscape(term) {
 function luceneBuildQuery(searchString) {
 	var terms = searchString.split(/\s+/);
 	var escapedTerms = terms.map(function(term) {
-		luceneTermEscape(term) + "~";
+		return luceneTermEscape(term) + "~";
 	});
 	return escapedTerms.join(" AND ")
 }
@@ -624,7 +624,7 @@ function luceneBuildQuery(searchString) {
 function loadSearchArtist(query) {
 	var escapedQuery = luceneBuildQuery(query);
 	var fullQuery = "artist:(" + escapedQuery + ")^1.0 OR alias:(" +
-			escapedQuery + ")^0.8 OR sorname:(" +
+			escapedQuery + ")^0.8 OR sortname:(" +
 			escapedQuery + ")^0.6";
 	rl.queue(function() {
 		$.get(wsAddr + '/artist', {
