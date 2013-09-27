@@ -254,16 +254,16 @@ var releaseTemplate = jsontemplate.Template(
 					'<div class="row">' +
 						'<div class="col-md-7">' +
 							'<div class="row">' +
-								'<div class="col-xs-2 col-md-1 track_number">{.section number}{@|html}{.end}</div>' +
-								'<div class="col-xs-8 col-md-9 track_name">' +
+								'<div class="col-sm-2 col-md-1 track_number">{.section number}{@|html}{.end}</div>' +
+								'<div class="col-sm-8 col-md-9 track_name">' +
 									'{artist-credit|artist-credit} – ' +
 									'<a href="?recording={recording.id|htmltag}">{title}</a>' +
 									'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
 								'</div>' +
-								'<div class="col-xs-2 track_length">{.section length}{@|recording-time}{.end}</div>' +
+								'<div class="col-sm-2 track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="col-xs-8 col-xs-offset-2 col-md-5 credits">' +
+						'<div class="col-sm-8 col-sm-offset-2 col-md-5 credits">' +
 	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
 		'{.repeated section forward}' +
 			'{@|relation-name} {work|work-link}' +
@@ -324,10 +324,10 @@ function formatTrackCount(r) {
 
 var releaseTileTemplate = jsontemplate.Template(
 	'<div class="row release-tile">' +
-		'<div class="col-xs-3">' +
+		'<div class="col-sm-3">' +
 			'{@|release-cover-art}' +
 		'</div>' +
-		'<div class="col-xs-9">' +
+		'<div class="col-sm-9">' +
 			'<h3>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
@@ -362,12 +362,12 @@ function formatReleaseTile(r) { return releaseTileTemplate.expand(r); }
 
 var releaseGroupTileTemplate = jsontemplate.Template(
 	'<div class="row release-group-tile">' +
-		'<div class="col-xs-3">' +
+		'<div class="col-sm-3">' +
 			'<div class="cover-art">' +
 				'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
-		'<div class="col-xs-9">' +
+		'<div class="col-sm-9">' +
 			'<div class="tile-labels">' +
 				'{.section primary-type}' +
 					' <span class="label label-primary">' +
@@ -729,12 +729,12 @@ var layoutTemplate = jsontemplate.Template(
 			'</div>' +
 		'</nav>' +
 		'<section class="row">' +
-			'<div id="body" class="col-xs-12">' +
+			'<div id="body" class="col-sm-12">' +
 				'{body|raw}' +
 			'</div>' +
 		'</section>' +
 		'<footer class="row">' +
-			'<div class="col-xs-12">' +
+			'<div class="col-sm-12">' +
 				'<p>This is an experimental page, using Javascript and the MusicBrainz JSON webservice to render pages. It is not associated with the official <a href="http://musicbrainz.org">MusicBrainz</a> site.</p>' +
 				'<p><a href="http://github.com/kepstin/mbjs">Check out the source on Github</a></p>' +
 			'</div>' +
