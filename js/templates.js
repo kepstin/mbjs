@@ -24,7 +24,7 @@ var linkTemplate = jsontemplate.Template(
 		'{text|html}' +
 	'</a>' +
 	'{.section comment}' +
-		' <span class="comment">({@|html|)</span>' +
+		' <span class="comment">({@|html})</span>' +
 	'{.end}'
 );
 
