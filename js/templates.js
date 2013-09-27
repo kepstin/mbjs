@@ -264,7 +264,7 @@ var releaseTemplate = jsontemplate.Template(
 								'<div class="col-xs-2 track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="col-xs-10 col-xs-offset-2 col-md-5 credits">' +
+						'<div class="col-xs-10 col-xs-offset-2 col-sm-offset-0 col-md-5 credits">' +
 	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
 		'{.repeated section forward}' +
 			'{@|relation-name} {work|work-link}' +

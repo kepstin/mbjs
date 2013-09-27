@@ -32,3 +32,6 @@ body {
 .col-xs-offset-2 {
   margin-left: 16.666666666666664%;
 }
+.col-sm-offset-0 {
+  margin-left: 0;
+}
