@@ -345,7 +345,8 @@ var releaseTileTemplate = jsontemplate.Template(
 				'{.repeated section label-info} ' +
 					'{.section label}' +
 						'{@|label-link}' +
-					'{.end} – ' +
+					'{.end}' +
+					'{.section label}{.section catalog-number} – {.end}{.end}' +
 					'{.section catalog-number}' +
 						'{@|html}' +
 					'{.end}' +
