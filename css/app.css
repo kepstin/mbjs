@@ -29,6 +29,6 @@ body {
 .tile-labels { float: right; }
 
 /* Workaround for missing styles in bootstrap, remove when 3.1 released */
-.col-md-offset-2 {
+.col-xs-offset-2 {
   margin-left: 16.666666666666664%;
 }
