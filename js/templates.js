@@ -27,12 +27,19 @@ var linkTemplate = jsontemplate.Template(
 		' <span class="comment">({@|html|)</span>' +
 	'{.end}'
 );
+
 function formatLink(link) {	return linkTemplate.expand(link); }
 function formatArtistLink(a) { return linkTemplate.expand({ url: '?artist=' + a['id'], title: a['sort-name'], text: a['name'] }); }
 function formatReleaseLink(r) { return linkTemplate.expand({ url: '?release=' + r['id'], text: r['title'] }); }
 function formatReleaseGroupLink(rg) { return linkTemplate.expand({ url: '?release-group=' + rg['id'], text: rg['title'] }); }
 function formatLabelLink(l) { return linkTemplate.expand({ url: '?label=' + l['id'], title: l['sort-name'], text: l['name'] }); }
-function formatRecordingLink(r) { return linkTemplate.expand({ url: '?recording=' + r['id'], text: r['title'], comment: r['disambiguation'] }); }
+function formatRecordingLink(r) {
+	return linkTemplate.expand({
+		url: '?recording=' + r['id'],
+		text: r['title'],
+		comment: r['disambiguation']
+	});
+}
 function formatWorkLink(r) { return linkTemplate.expand({ url: '?work=' + r['id'], text: r['title'] }); }
 
 var coverArtTemplate = jsontemplate.Template(
