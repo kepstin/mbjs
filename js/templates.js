@@ -254,8 +254,8 @@ var releaseTemplate = jsontemplate.Template(
 					'<div class="row">' +
 						'<div class="col-md-7">' +
 							'<div class="row">' +
-								'<div class="col-xs-2 col-md-1 track_number">{.section number}{@|html}{.end}</div>' +
-								'<div class="col-xs-8 col-md-9 track_name">' +
+								'<div class="col-xs-1 col-md-1 track_number">{.section number}{@|html}{.end}</div>' +
+								'<div class="col-xs-9 col-md-9 track_name">' +
 									'{artist-credit|artist-credit} – ' +
 									'<a href="?recording={recording.id|htmltag}">{title}</a>' +
 									'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +
@@ -263,7 +263,7 @@ var releaseTemplate = jsontemplate.Template(
 								'<div class="col-xs-2 track_length">{.section length}{@|recording-time}{.end}</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="col-xs-8 col-xs-offset-2 col-md-5 credits">' +
+						'<div class="col-xs-10 col-xs-offset-2 col-md-5 credits">' +
 	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
 		'{.repeated section forward}' +
 			'{@|relation-name} {work|work-link}' +
