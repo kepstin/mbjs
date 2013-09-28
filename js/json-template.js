@@ -210,7 +210,15 @@ function _ScopedContext(context, undefined_str) {
       if (name == '@') {
         new_context = stack[stack.length-1].context;
       } else {
-        new_context = this._LookUpStack(name) || null;
+      	try {
+          new_context = this._LookUpStack(name)
+        } catch (err) {
+          if (err.name == 'UndefinedVariable') {
+            new_context = null;
+          } else {
+            throw err;
+          }
+        }
       }
       stack.push({context: new_context, index: -1});
       return new_context;
