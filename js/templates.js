@@ -717,10 +717,11 @@ var layoutTemplate = jsontemplate.Template(
 						'<select name="entity" class="form-control">' +
 							'<option value="artist">Artist</option>' +
 						'</select>' +
-						'<input name="query" type="search" class="form-control" placeholder="Search">' +
-						'<button type="submit" class="btn btn-default">Submit</button>' +
 					'</div>' +
-
+					'<div class="form-group">' +
+						'<input name="query" type="search" class="form-control" placeholder="Search">' +
+					'</div>' +
+					'<button type="submit" class="btn btn-default">Submit</button>' +
 				'</form>' +
 			'</div>' +
 		'</nav>' +
