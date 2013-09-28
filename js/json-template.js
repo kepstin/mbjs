@@ -210,7 +210,7 @@ function _ScopedContext(context, undefined_str) {
       if (name == '@') {
         new_context = stack[stack.length-1].context;
       } else {
-        new_context = stack[stack.length-1].context[name] || null;
+        new_context = this._LookUpStack(name) || null;
       }
       stack.push({context: new_context, index: -1});
       return new_context;
