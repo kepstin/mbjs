@@ -24,7 +24,16 @@ body {
   margin-bottom: 20px;
 }
 
-.release-tiles > :nth-child(2n+1), .release-group-tiles > :nth-child(2n+1) { clear: both; }
+@media (min-width: 768px) and (max-width: 1199px) {
+	.release-tiles > :nth-child(2n+1), .release-group-tiles > :nth-child(2n+1) {
+		clear: both;
+	}
+}
+@media (min-width: 1200px) {
+	.release-tiles > :nth-child(3n+1), .release-group-tiles > :nth-child(3n+1) {
+		clear: both;
+	}
+}
 
 .tile-labels { float: right; }
 
