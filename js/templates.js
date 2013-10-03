@@ -243,20 +243,20 @@ var releaseTemplate = jsontemplate.Template(
 
 	'</header>' +
 	'{.repeated section media}' +
-		'<h3>' +
-			'{.section format}{@|html}{.or}Medium{.end} {position}' +
-			'{.section title}' +
-				': {@|html}' +
-			'{.end}' +
-		'</h3>' +
 		'<div class="tracklist">' +
+			'<h3>' +
+				'{.section format}{@|html}{.or}Medium{.end} {position}' +
+				'{.section title}' +
+					': {@|html}' +
+				'{.end}' +
+			'</h3>' +
 			'{.repeated section tracks}' +
 				'<div class="track">' +
 					'<div class="row">' +
 						'<div class="col-md-7">' +
 							'<div class="row">' +
-								'<div class="col-xs-1 col-md-1 track_number">{.section number}{@|html}{.end}</div>' +
-								'<div class="col-xs-9 col-md-9 track_name">' +
+								'<div class="col-xs-2 col-md-2 track_number">{.section number}{@|html}{.end}</div>' +
+								'<div class="col-xs-8 col-md-8 track_name">' +
 									'{artist-credit|artist-credit} – ' +
 									'<a href="?recording={recording.id|htmltag}">{title}</a>' +
 									'{.section recording}{.section disambiguation} <small>({@|html})</small>{.end}{.end}' +

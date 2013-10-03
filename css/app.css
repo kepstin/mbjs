@@ -44,3 +44,25 @@ body {
 .col-sm-offset-0 {
   margin-left: 0;
 }
+.track > .row {
+  border-top: 1px solid #eee;
+  padding: 2px 0;
+}
+.track:first-child > .row {
+  border-top: none;
+ }
+body {
+  background: #eee;
+}
+#body > header {
+  background: #fff;
+  padding: 15px 0;
+}
+#body > .tracklist {
+  background: #fff;
+  margin: 0 -15px;
+  padding: 15px;
+}
+.track_number {
+  text-align: right;
+}
