@@ -204,7 +204,7 @@ var releaseTemplate = jsontemplate.Template(
 		'</li>' +
 	'</ol>' +
 	'<header class="row">' +
-		'<div class="col-md-9">' +
+		'<div class="col-sm-9">' +
 			'<h1>' +
 				'{@|release-link}' +
 				'{.section disambiguation}' +
@@ -237,7 +237,7 @@ var releaseTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-		'<div class="col-md-3">' +
+		'<div class="col-sm-3">' +
 			'{@|release-cover-art}' +
 		'</div>' +
 
@@ -410,9 +410,9 @@ function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); 
 var artistTemplate = jsontemplate.Template(
 	'<header class="row">' +
 		'{.section image}' +
-			'<div class="col-md-9">' +
+			'<div class="col-sm-9">' +
 		'{.or}' +
-			'<div class="col-md-12">' +
+			'<div class="col-sm-12">' +
 		'{.end}' +
 			'<h1>' +
 				'{@|artist-link}' +
@@ -450,7 +450,7 @@ var artistTemplate = jsontemplate.Template(
 			'{.end}' + */
 		'</div>' +
 		'{.section image}' +
-			'<div class="col-md-3">' +
+			'<div class="col-sm-3">' +
 				'<div class="artist-image">' +
 					'<img class="img-responsive" src="{image|htmltag}" alt="">' +
 				'</div>' +
@@ -564,7 +564,7 @@ var releaseGroupTemplate = jsontemplate.Template(
 		'</li>' +
 	'</ol>' +
 	'<header class="row">' +
-		'<div class="col-md-9">' +
+		'<div class="col-sm-9">' +
 			'<h1>' +
 				'{@|release-group-link}' +
 				'{.section disambiguation}' +
@@ -592,9 +592,9 @@ var releaseGroupTemplate = jsontemplate.Template(
 				'<p>{@|html}</p>' +
 			'{.end}' +
 		'</div>' +
-		'<div class="col-md-3">' +
+		'<div class="col-sm-3">' +
 			'<div class="cover-art">' +
-				'<img src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
 			'</div>' +
 		'</div>' +
 	'</header>' +
