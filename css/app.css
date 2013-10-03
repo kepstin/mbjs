@@ -5,6 +5,7 @@ body {
 .cover-art, .artist-image {
   max-height: 16em;
   text-align: center;
+  margin: auto;
 }
 /* line 55, ../sass/app.scss */
 .cover-art img, .artist-image img {
@@ -50,7 +51,7 @@ body {
   border-top: 1px solid #eee;
   padding: 2px 0;
 }
-.track:first-child > .row {
+.track:first-of-type > .row {
   border-top: none;
  }
 body {
