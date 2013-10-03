@@ -47,6 +47,12 @@ body {
     margin-left: 0;
   }
 }
+@media (min-width: 992px) {
+  .col-md-offset-0 {
+    margin-left: 0;
+  }
+}
+
 .track > .row {
   border-top: 1px solid #eee;
   padding: 2px 0;
