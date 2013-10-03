@@ -14,15 +14,16 @@ body {
 
 /* line 61, ../sass/app.scss */
 .release-group-tile .cover-art, .release-tile .cover-art {
-  height: 8em;
-  max-height: 8em;
+  /*height: 8em;*/
+  max-height: 6em;
 }
 .release-group-tile h3, .release-tile h3 {
   margin-top: 0;
 }
 
 .release-group-tile, .release-tile {
-  margin-bottom: 20px;
+  padding: 15px;
+  margin-bottom: 30px;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
