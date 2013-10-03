@@ -5,11 +5,11 @@ body {
 .cover-art, .artist-image {
   max-height: 16em;
   text-align: center;
-  margin: auto;
 }
 /* line 55, ../sass/app.scss */
 .cover-art img, .artist-image img {
   max-height: inherit;
+  margin: auto;
 }
 
 /* line 61, ../sass/app.scss */
