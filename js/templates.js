@@ -324,79 +324,83 @@ function formatTrackCount(r) {
 }
 
 var releaseTileTemplate = jsontemplate.Template(
-	'<div class="row release-tile">' +
-		'<div class="col-xs-3">' +
-			'{@|release-cover-art}' +
-		'</div>' +
-		'<div class="col-xs-9">' +
-			'<h3>' +
-				'{@|release-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
-				'<br>' +
-				'<small>{artist-credit|artist-credit}</small>' +
-			'</h3>' +
-			'<p>' +
-				'{@|medium-count}, ' +
-				'{@|track-count} tracks, ' +
-				'{.section date}{@|html}, {.end}' +
-				'{.section country}{@|html}{.end}<br>' +
-				'{.repeated section label-info} ' +
-					'{.section label}' +
-						'{@|label-link}' +
+	'<div class="release-tile">' +
+		'<div class="row">' +
+			'<div class="col-xs-3">' +
+				'{@|release-cover-art}' +
+			'</div>' +
+			'<div class="col-xs-9">' +
+				'<h3>' +
+					'{@|release-link}' +
+					'{.section disambiguation}' +
+						' <small>({@|html})</small>' +
 					'{.end}' +
-					'{.section label}{.section catalog-number} – {.end}{.end}' +
-					'{.section catalog-number}' +
-						'{@|html}' +
-					'{.end}' +
-				'{.alternates with}' +
 					'<br>' +
-				'{.end}' +
-				'{.section barcode}' +
-					'<br>{@|html}' +
-				'{.end}' +
-			'</p>' +
+					'<small>{artist-credit|artist-credit}</small>' +
+				'</h3>' +
+				'<p>' +
+					'{@|medium-count}, ' +
+					'{@|track-count} tracks, ' +
+					'{.section date}{@|html}, {.end}' +
+					'{.section country}{@|html}{.end}<br>' +
+					'{.repeated section label-info} ' +
+						'{.section label}' +
+							'{@|label-link}' +
+						'{.end}' +
+						'{.section label}{.section catalog-number} – {.end}{.end}' +
+						'{.section catalog-number}' +
+							'{@|html}' +
+						'{.end}' +
+					'{.alternates with}' +
+						'<br>' +
+					'{.end}' +
+					'{.section barcode}' +
+						'<br>{@|html}' +
+					'{.end}' +
+				'</p>' +
+			'</div>' +
 		'</div>' +
 	'</div>',
 templateOptions);
 function formatReleaseTile(r) { return releaseTileTemplate.expand(r); }
 
 var releaseGroupTileTemplate = jsontemplate.Template(
-	'<div class="row release-group-tile">' +
-		'<div class="col-xs-3">' +
-			'<div class="cover-art">' +
-				'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+	'<div class="release-group-tile">' +
+		'<div class="row">' +
+			'<div class="col-xs-3">' +
+				'<div class="cover-art">' +
+					'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'</div>' +
 			'</div>' +
-		'</div>' +
-		'<div class="col-xs-9">' +
-			'<div class="tile-labels">' +
-				'{.section primary-type}' +
-					' <span class="label label-primary">' +
+			'<div class="col-xs-9">' +
+				'<div class="tile-labels">' +
+					'{.section primary-type}' +
+						' <span class="label label-primary">' +
+							'{@|html}' +
+						'</span>' +
+					'{.end}' +
+					'{.repeated section secondary-types}' +
+						' <span class="label label-default">' +
+							'{@|html}' +
+						'</span>' +
+					'{.end}' +
+				'</div>' +
+				'<h3>' +
+					'{@|release-group-link}' +
+					'{.section disambiguation}' +
+						' <small>({@|html})</small>' +
+					'{.end}' +
+					'<br>' +
+					'<small>' +
+						'{artist-credit|artist-credit}' +
+					'</small>' +
+				'</h3>' +
+				/*'<p>' +
+					'{.section first-release-date}' +
 						'{@|html}' +
-					'</span>' +
-				'{.end}' +
-				'{.repeated section secondary-types}' +
-					' <span class="label label-default">' +
-						'{@|html}' +
-					'</span>' +
-				'{.end}' +
+					'{.end}' +
+				'</p>' +*/
 			'</div>' +
-			'<h3>' +
-				'{@|release-group-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
-				'{.end}' +
-				'<br>' +
-				'<small>' +
-					'{artist-credit|artist-credit}' +
-				'</small>' +
-			'</h3>' +
-			/*'<p>' +
-				'{.section first-release-date}' +
-					'{@|html}' +
-				'{.end}' +
-			'</p>' +*/
 		'</div>' +
 	'</div>',
 	templateOptions

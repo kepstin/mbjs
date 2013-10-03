@@ -66,3 +66,6 @@ body {
 .track_number {
   text-align: right;
 }
+.release-group-tile, .release-group-tile {
+  background: #fff;
+}
