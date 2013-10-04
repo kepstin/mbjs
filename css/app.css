@@ -62,7 +62,7 @@ body {
   border-top: none;
  }
 body {
-  background: #eee;
+  background: url(/images/brushed.png) #eee;
 }
 #body > header {
   background: #fff;
