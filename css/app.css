@@ -66,10 +66,13 @@ body {
   margin-bottom: 20px;
 
 }
-#body > .tracklist {
+.tracklist {
   background: #fff;
-  margin: 20px -15px;
+  margin-bottom: 20px;
   padding: 15px;
+}
+.tracklist > h3 {
+  margin-top: 0;
 }
 header h1 {
   margin: 0;
