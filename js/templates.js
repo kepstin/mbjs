@@ -203,44 +203,45 @@ var releaseTemplate = jsontemplate.Template(
 			'{@|release-link}' +
 		'</li>' +
 	'</ol>' +
-	'<header class="row">' +
-		'<div class="col-sm-9">' +
-			'<h1>' +
-				'{@|release-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
+	'<header>' +
+		'<div class="row">' +
+			'<div class="col-sm-9">' +
+				'<h1>' +
+					'{@|release-link}' +
+					'{.section disambiguation}' +
+						' <small>({@|html})</small>' +
+					'{.end}' +
+					'<br>' +
+					'<small>' +
+						'{artist-credit|artist-credit}' +
+					'</small>' +
+				'</h1>' +
+				'{@|medium-count}, ' +
+				'{@|track-count} tracks, ' +
+				'{.section date}{@|html}, {.end}' +
+				'{.section country}{@|html}{.end}<br>' +
+				'{.repeated section label-info} ' +
+					'{.section label}' +
+						'{@|label-link}' +
+					'{.end}' +
+					'{.section label}{.section catalog-number} – {.end}{.end}' +
+					'{.section catalog-number}' +
+						'{@|html}' +
+					'{.end}' +
+				'{.alternates with}' +
+					'<br>' +
 				'{.end}' +
-				'<br>' +
-				'<small>' +
-					'{artist-credit|artist-credit}' +
-				'</small>' +
-			'</h1>' +
-			'{@|medium-count}, ' +
-			'{@|track-count} tracks, ' +
-			'{.section date}{@|html}, {.end}' +
-			'{.section country}{@|html}{.end}<br>' +
-			'{.repeated section label-info} ' +
-				'{.section label}' +
-					'{@|label-link}' +
+				'{.section barcode}' +
+					'<br>{@|html}' +
 				'{.end}' +
-				'{.section label}{.section catalog-number} – {.end}{.end}' +
-				'{.section catalog-number}' +
-					'{@|html}' +
+				'{.section annotation}' +
+					'<p>{@|html}</p>' +
 				'{.end}' +
-			'{.alternates with}' +
-				'<br>' +
-			'{.end}' +
-			'{.section barcode}' +
-				'<br>{@|html}' +
-			'{.end}' +
-			'{.section annotation}' +
-				'<p>{@|html}</p>' +
-			'{.end}' +
+			'</div>' +
+			'<div class="col-sm-3">' +
+				'{@|release-cover-art}' +
+			'</div>' +
 		'</div>' +
-		'<div class="col-sm-3">' +
-			'{@|release-cover-art}' +
-		'</div>' +
-
 	'</header>' +
 	'{.repeated section media}' +
 		'<div class="tracklist">' +
@@ -408,54 +409,56 @@ var releaseGroupTileTemplate = jsontemplate.Template(
 function formatReleaseGroupTile(r) { return releaseGroupTileTemplate.expand(r); }
 
 var artistTemplate = jsontemplate.Template(
-	'<header class="row">' +
-		'{.section image}' +
-			'<div class="col-sm-9">' +
-		'{.or}' +
-			'<div class="col-sm-12">' +
-		'{.end}' +
-			'<h1>' +
-				'{@|artist-link}' +
-			'</h1>' +
-			'<p>' +
-				'{.section type}' +
-					'{type|html}' +
-				'{.or}' +
-					'Unknown' +
-				'{.end}' +
-				'{.section gender}' +
-					', {@|html}' +
-				'{.end}' +
-				'{.section area}' +
-					', {name|html}' +
-				'{.end}' +
-				'{.section life-span}' +
-					', {@|life-span}' +
-				'{.end}' +
-			'</p>' +
-			'{.section twitter}' +
-				'<a href="https://twitter.com/{@|htmltag}" class="twitter-follow-button" data-show-count="true" data-dnt="true">Follow @{@|html}</a>' +
+	'<header>' +
+		'<div class="row">' +
+			'{.section image}' +
+				'<div class="col-sm-9">' +
+			'{.or}' +
+				'<div class="col-sm-12">' +
 			'{.end}' +
-			'{.section facebook}' +
-				'<div class="fb-subscribe" data-show-faces="false" data-href="{@|htmltag}"></div>' +
-			'{.end}' +
-			'{.section gplus}' +
-				'<div class="g-plus" data-height="69" data-href="{@|htmltag}"></div>' +
-			'{.end}' +
-			'{.section wikipedia}' +
-				'{@}' +
-			'{.end}' +
-		/*	'{.section annotation}' +
-				'<p>{@|html}</p>' +
-			'{.end}' + */
-		'</div>' +
-		'{.section image}' +
-			'<div class="col-sm-3">' +
-				'<div class="artist-image">' +
-					'<img class="img-responsive" src="{image|htmltag}" alt="">' +
-				'</div>' +
+				'<h1>' +
+					'{@|artist-link}' +
+				'</h1>' +
+				'<p>' +
+					'{.section type}' +
+						'{type|html}' +
+					'{.or}' +
+						'Unknown' +
+					'{.end}' +
+					'{.section gender}' +
+						', {@|html}' +
+					'{.end}' +
+					'{.section area}' +
+						', {name|html}' +
+					'{.end}' +
+					'{.section life-span}' +
+						', {@|life-span}' +
+					'{.end}' +
+				'</p>' +
+				'{.section twitter}' +
+					'<a href="https://twitter.com/{@|htmltag}" class="twitter-follow-button" data-show-count="true" data-dnt="true">Follow @{@|html}</a>' +
+				'{.end}' +
+				'{.section facebook}' +
+					'<div class="fb-subscribe" data-show-faces="false" data-href="{@|htmltag}"></div>' +
+				'{.end}' +
+				'{.section gplus}' +
+					'<div class="g-plus" data-height="69" data-href="{@|htmltag}"></div>' +
+				'{.end}' +
+				'{.section wikipedia}' +
+					'{@}' +
+				'{.end}' +
+			/*	'{.section annotation}' +
+					'<p>{@|html}</p>' +
+				'{.end}' + */
 			'</div>' +
-		'{.end}' +
+			'{.section image}' +
+				'<div class="col-sm-3">' +
+					'<div class="artist-image">' +
+						'<img class="img-responsive" src="{image|htmltag}" alt="">' +
+					'</div>' +
+				'</div>' +
+			'{.end}' +
+		'</div>' +
 	'</header>' +
 	'<p class="credits">' +
 		'{.section band-members}' +
@@ -563,38 +566,40 @@ var releaseGroupTemplate = jsontemplate.Template(
 			'{@|release-group-link}' +
 		'</li>' +
 	'</ol>' +
-	'<header class="row">' +
-		'<div class="col-sm-9">' +
-			'<h1>' +
-				'{@|release-group-link}' +
-				'{.section disambiguation}' +
-					' <small>({@|html})</small>' +
+	'<header>' +
+		'<div class="row">' +
+			'<div class="col-sm-9">' +
+				'<h1>' +
+					'{@|release-group-link}' +
+					'{.section disambiguation}' +
+						' <small>({@|html})</small>' +
+					'{.end}' +
+					'{.section primary-type}' +
+						' <span class="label">' +
+							'{@|html}' +
+						'</span>' +
+					'{.end}' +
+					'{.repeated section secondary-types}' +
+						' <span class="secondary label">' +
+							'{@|html}' +
+						'</span>' +
+					'{.end}' +
+					'<br>' +
+					'<small>' +
+						'{artist-credit|artist-credit}' +
+					'</small>' +
+				'</h1>' +
+				'{.section wikipedia}' +
+					'{@}' +
 				'{.end}' +
-				'{.section primary-type}' +
-					' <span class="label">' +
-						'{@|html}' +
-					'</span>' +
+				'{.section annotation}' +
+					'<p>{@|html}</p>' +
 				'{.end}' +
-				'{.repeated section secondary-types}' +
-					' <span class="secondary label">' +
-						'{@|html}' +
-					'</span>' +
-				'{.end}' +
-				'<br>' +
-				'<small>' +
-					'{artist-credit|artist-credit}' +
-				'</small>' +
-			'</h1>' +
-			'{.section wikipedia}' +
-				'{@}' +
-			'{.end}' +
-			'{.section annotation}' +
-				'<p>{@|html}</p>' +
-			'{.end}' +
-		'</div>' +
-		'<div class="col-sm-3">' +
-			'<div class="cover-art">' +
-				'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+			'</div>' +
+			'<div class="col-sm-3">' +
+				'<div class="cover-art">' +
+					'<img class="img-responsive" src="http://coverartarchive.org/release-group/{id}/front-250" onerror="coverArtMissing(this);" alt="">' +
+				'</div>' +
 			'</div>' +
 		'</div>' +
 	'</header>' +

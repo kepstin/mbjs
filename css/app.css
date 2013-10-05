@@ -19,7 +19,7 @@
 
 .release-group-tile, .release-tile {
   padding: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -63,12 +63,8 @@ body {
 #body > header {
   background: #fff;
   padding: 15px;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-#body > header.row {
-  padding-left: 0;
-  padding-right: 0;
+  margin-bottom: 20px;
+
 }
 #body > .tracklist {
   background: #fff;
