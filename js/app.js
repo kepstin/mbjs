@@ -208,6 +208,32 @@ function groupReleaseGroupsByYear(entity) {
 	entity['groupedReleaseGroups'] = groupedReleaseGroups;
 }
 
+function groupReleasesByYear(entity) {
+	releases = entity['releases'];
+	groupedReleases = [];
+	releaseGroup = {
+		year: undefined
+	};
+
+	for (var i = 0; i < releases.length; ++i) {
+		var r = releases[i]
+		var year = '????';
+		if (r['date']) {
+			year = r['date'].split('-')[0];
+		}
+		if (year == '') year = '????';
+
+		if (releaseGroup['year'] != year) {
+			releaseGroup = { year: year, releases: [] }
+			groupedReleases.push(releaseGroup);
+		}
+
+		releaseGroup['releases'].push(r);
+	}
+
+	entity['groupedReleases'] = groupedReleases;
+}
+
 
 function releaseOrder(a, b) {
 	if (!a['date']) {
@@ -570,6 +596,8 @@ function renderReleaseGroup(releaseGroup) {
 	});
 
 	releaseGroup['releases'].sort(releaseOrder);
+	console.log(releaseGroup);
+	groupReleasesByYear(releaseGroup);
 
 	console.log(releaseGroup);
 
@@ -617,10 +645,11 @@ function luceneBuildQuery(searchString) {
 	var terms = searchString.split(/\s+/);
 	var escapedTerms = terms.map(luceneTermEscape);
 	var fuzzyTerms = escapedTerms.map(function(term) { return term + "~" });
-	return '(' + escapedTerms.join(' AND ') + ') OR (' +
-		fuzzyTerms.join(' AND ') + ')^0.75 OR (' +
+	return '(' + ' "' + escapedTerms.join(' ') + '" ' + ")^2 OR (" +
+		escapedTerms.join(' AND ') + ') OR (' +
+		fuzzyTerms.join(' AND ') + ')^0.75' /* OR (' +
 		escapedTerms.join(' OR ') + ')^0.5 OR (' +
-		fuzzyTerms.join(' OR ') + ')^0.25';
+		fuzzyTerms.join(' OR ') + ')^0.25'*/;
 }
 
 function loadSearchArtist(query) {

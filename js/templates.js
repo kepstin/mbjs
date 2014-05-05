@@ -602,13 +602,22 @@ var releaseGroupTemplate = jsontemplate.Template(
 			'</div>' +
 		'</div>' +
 	'</header>' +
-	'<div class="row release-tiles">' +
-		'{.repeated section releases}' +
-			'<div class="col-sm-6 col-lg-4">' +
-				'{@|release-tile}' +
+	'{.repeated section groupedReleases}' +
+		'<div class="row">' +
+			'<div class="col-md-1">' +
+				'<h4>{year|html}</h4>' +
 			'</div>' +
-		'{.end}' +
-	'</div>',
+			'<div class="col-md-11">' +
+				'<div class="row release-tiles">' +
+					'{.repeated section releases}' +
+						'<div class="col-sm-6 col-lg-4">' +
+							'{@|release-tile}' +
+						'</div>' +
+					'{.end}' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+	'{.end}',
 	templateOptions);
 
 var recordingTemplate = jsontemplate.Template(
@@ -706,8 +715,8 @@ var searchArtistTemplate = jsontemplate.Template(
 );
 
 var layoutTemplate = jsontemplate.Template(
-	'<div class="container">' +
-		'<nav class="navbar navbar-default navbar-static-top">' +
+	'<nav class="navbar navbar-default navbar-static-top">' +
+		'<div class="container">' +
 			'<div class="navbar-header">' +
 				'<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
 					'<span class="sr-only">Toggle navigation</span>' +
@@ -732,7 +741,9 @@ var layoutTemplate = jsontemplate.Template(
 					'<button type="submit" class="btn btn-default">Submit</button>' +
 				'</form>' +
 			'</div>' +
-		'</nav>' +
+		'</div>' +
+	'</nav>' +
+	'<div class="container">' +
 		'<section class="row">' +
 			'<div id="body" class="col-xs-12">' +
 				'{body|raw}' +
