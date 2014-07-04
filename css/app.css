@@ -1,3 +1,5 @@
+@import url(../fonts/mplus-TESTFLIGHT-058/mplus-webfonts.css);
+
 .cover-art, .artist-image {
   max-height: 16em;
   text-align: center;
@@ -59,13 +61,23 @@
  }
 body {
 /*  background: url(/images/brushed.png) #eee;*/
-  font-family: "M+ 1p", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 500;
+  font-family: "Open Sans", "M+ 1p", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "M+ 1p", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "M+ 1p", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
+
+.comment {
+  color: #777;
+  font-weight: 400;
+}
+h1 .comment, h2 .comment, h3 .comment, h4 .comment, h5 .comment, h6 .comment, .h1 .comment, .h2 .comment, .h3 .comment, .h4 .comment, .h5 .comment, .h6 .comment {
+  font-size: 65%;
+  line-height: 1;
+}
+
 #body > header {
   background: #fff;
 /*  padding: 15px;*/

@@ -1,0 +1,11 @@
+@font-face {
+	font-family: "M+ 1p";
+	font-weight: 400;
+	src: local("M+ 1p"), url(mplus-1p-regular.ttf);
+}
+
+@font-face {
+	font-family: "M+ 1p";
+	font-weight: 700;
+	src: local("M+ 1p"), url(mplus-1p-bold.ttf);
+}

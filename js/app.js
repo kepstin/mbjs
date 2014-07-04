@@ -513,6 +513,7 @@ function renderRecording(recording) {
 		return (r['status'] != "Pseudo-Release");
 	});
 	recording['releases'].sort(releaseOrder);
+	groupReleasesByYear(recording);
 	console.log(recording);
 	renderLayout(recordingTemplate.expand(recording));
 }

@@ -91,6 +91,10 @@ var relationNames = {
 		forward: '{additional} {guest} {solo} {*} {*:|vocals}',
 		backward: '{additional} {guest} {solo} {*} {*:|vocals}',
 	},
+	'22661fb8-cdb7-4f67-8385-b2a8be6c9f0d': {
+		forward: '{additional:additionally} arranged',
+		backward: '{additional} arranger',
+	},
 	'3e48faba-ec01-47fd-8e89-30e81161661c': {
 		forward: '{additional} {translated} lyrics',
 		backward: '{additional} {translated:translator|lyricist}',
@@ -632,9 +636,6 @@ var recordingTemplate = jsontemplate.Template(
 	'<header>' +
 		'<h1>' +
 			'{@|recording-link}' +
-			'{.section disambiguation}' +
-				' <small>({@|html})</small>' +
-			'{.end}' +
 			'<br>' +
 			'<small>' +
 				'{artist-credit|artist-credit}' +
@@ -649,6 +650,9 @@ var recordingTemplate = jsontemplate.Template(
 				'<div>{@|relation-name}: {artist|artist-link}</div>' +
 			'{.end}{.end}' +
 			'{.section instrument}{.repeated section backward}' +
+				'<div>{@|relation-name}: {artist|artist-link}</div>' +
+			'{.end}{.end}' +
+			'{.section arranger}{.repeated section backward}' +
 				'<div>{@|relation-name}: {artist|artist-link}</div>' +
 			'{.end}{.end}' +
 		'{.end}' +
@@ -675,15 +679,22 @@ var recordingTemplate = jsontemplate.Template(
 		'{.end}{.end}' +
 	'{.end}' +
 	'<h3>Appears on Releases</h3>' +
-	'<div class="row release-tiles">' +
-		'{.repeated section releases}' +
-			'<div class="col-sm-6 col-lg-4">' +
-				'{@|release-tile}' +
+	'{.repeated section groupedReleases}' +
+		'<div class="row">' +
+			'<div class="col-md-1">' +
+				'<h4>{year|html}</h4>' +
 			'</div>' +
-		/*'{.else}' +
-			'<li><p>This is a stand-alone recording.</p></li>' +*/
-		'{.end}' +
-	'</div>',
+			'<div class="col-md-11">' +
+				'<div class="row release-tiles">' +
+					'{.repeated section releases}' +
+						'<div class="col-sm-6 col-lg-4">' +
+							'{@|release-tile}' +
+						'</div>' +
+					'{.end}' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+	'{.end}',
 	templateOptions
 );
 
