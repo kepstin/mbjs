@@ -88,20 +88,24 @@ function formatRecordingTime(t) {
 
 var relationNames = {
 	'0fdbe3c6-7700-4a31-ae54-b53f06ae1cfa': {
-		forward: '{additional} {guest} {solo} {*} {*:|vocals}',
-		backward: '{additional} {guest} {solo} {*} {*:|vocals}',
+		forward: '{additional} {guest} {solo} {*:%|vocals}',
+		backward: '{additional} {guest} {solo} {*:%|vocals}'
 	},
 	'22661fb8-cdb7-4f67-8385-b2a8be6c9f0d': {
 		forward: '{additional:additionally} arranged',
-		backward: '{additional} arranger',
+		backward: '{additional} arranger'
 	},
 	'3e48faba-ec01-47fd-8e89-30e81161661c': {
 		forward: '{additional} {translated} lyrics',
-		backward: '{additional} {translated:translator|lyricist}',
+		backward: '{additional} {translated:translator|lyricist}'
 	},
 	'59054b12-01ac-43ee-a618-285fd397e461': {
-		forward: '{additional} {guest} {solo} {*}',
-		backward: '{additional} {guest} {solo} {*}',
+		forward: '{additional} {guest} {solo} {*:%|instruments}',
+		backward: '{additional} {guest} {solo} {*:%|instruments}'
+	},
+	'628a9658-f54c-4142-b0c0-95f031b544da': {
+		forward: '{additional:additionally} {guest} {solo} performed',
+		backward: '{additional} {guest} {solo} performer'
 	},
 	'75c09861-6857-4ec0-9729-84eefde7fc86': {
 		forward: '{additional} {minor} collaborator on',
@@ -109,15 +113,15 @@ var relationNames = {
 	},
 	'a255bca1-b157-4518-9108-7b147dc3fc68': {
 		forward: '{additional:additionally} wrote',
-		backward: '{additional} writer',
+		backward: '{additional} writer'
 	},
 	'a3005666-a872-32c3-ad06-98af558e99b0': {
 		forward: '{partial} {live} {instrumental} {cover} recording of',
-		backward: '{partial} {live} {instrumental} {cover} recordings',
+		backward: '{partial} {live} {instrumental} {cover} recordings'
 	},
 	'd59d99ea-23d4-4a80-b066-edca32ee158f': {
 		forward: '{additional:additionally} composed',
-		backward: '{additional} composer',
+		backward: '{additional} composer'
 	},
 	'e259a3f5-ce8e-45c1-9ef7-90ff7d0c7589': {
 		forward: 'voice of',
@@ -150,7 +154,10 @@ function formatRelationName(rel) {
 			}
 			if (present) {
 				console.log("Attribute is present");
-				replace = matches[2] === undefined ? attr : matches[2];
+				if (matches[2] === undefined || matches[2] === '%')
+					replace = attr;
+				else
+					replace = matches[2];
 			} else {
 				console.log("Attribute is not present");
 				replace = matches[3] === undefined ? '' : matches[3];
@@ -172,7 +179,10 @@ function formatRelationName(rel) {
 			present = (unusedAttrs.length > 0)
 			if (present) {
 				console.log("Attribute is present");
-				replace = matches[1] === undefined ? unusedAttrs.join(', ') : matches[1];
+				if (matches[1] === undefined || matches[1] === '%')
+					replace = unusedAttrs.join(', ');
+				else
+					replace = matches[1];
 			} else {
 				console.log("Attribute is not present");
 				replace = matches[2] === undefined ? '' : matches[2];
