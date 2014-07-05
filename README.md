@@ -8,7 +8,7 @@ so [check it out][MBJS].
 It is implemented entirely in client-side (i.e. in-browser) javascript code.
 
 [MusicBrainz]: https://musicbrainz.org/
-[MBJS]: https://mbjs.kepstin.ca/
+[MBJS]: http://mbjs.kepstin.ca/
 
 Installation Instructions
 -------------------------
