@@ -37,21 +37,6 @@
 
 .tile-labels { float: right; }
 
-/* Workaround for missing styles in bootstrap, remove when 3.1 released */
-.col-xs-offset-2 {
-  margin-left: 16.666666666666664%;
-}
-@media (min-width: 768px) {
-  .col-sm-offset-0 {
-    margin-left: 0;
-  }
-}
-@media (min-width: 992px) {
-  .col-md-offset-0 {
-    margin-left: 0;
-  }
-}
-
 .track > .row {
   border-top: 1px solid #eee;
   padding: 7px 0;
