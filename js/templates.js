@@ -91,6 +91,10 @@ var relationNames = {
 		forward: '{additional} {guest} {solo} {*:%|vocals}',
 		backward: '{additional} {guest} {solo} {*:%|vocals}'
 	},
+	'12ac9db0-ec26-3567-be3a-2e662e617803': { /* deprecated */
+		forward: 'medley of',
+		backward: 'referred to in medleys'
+	},
 	'22661fb8-cdb7-4f67-8385-b2a8be6c9f0d': {
 		forward: '{additional:additionally} arranged',
 		backward: '{additional} arranger'
@@ -116,8 +120,8 @@ var relationNames = {
 		backward: '{additional} writer'
 	},
 	'a3005666-a872-32c3-ad06-98af558e99b0': {
-		forward: '{partial} {live} {instrumental} {cover} recording of',
-		backward: '{partial} {live} {instrumental} {cover} recordings'
+		forward: '{live} {medley:medley including a} {partial} {instrumental} {cover} recording of',
+		backward: '{live} {medley:medleys including} {partial} {instrumental} {cover} recordings'
 	},
 	'd59d99ea-23d4-4a80-b066-edca32ee158f': {
 		forward: '{additional:additionally} composed',
@@ -281,7 +285,7 @@ var releaseTemplate = jsontemplate.Template(
 						'<div class="col-xs-10 col-xs-offset-2 col-md-offset-0 col-md-5 credits">' +
 	'{.section recording}{.section groupedRelations}{.section work}{.section performance}' +
 		'{.repeated section forward}' +
-			'{@|relation-name} {work|work-link}' +
+			'{@|relation-name} {work|work-link}<br>' +
 		'{.end}' +
 	'{.end}{.end}{.end}{.end}' +
 						'</div>' +
@@ -670,6 +674,27 @@ var recordingTemplate = jsontemplate.Template(
 		'{.section work}{.section performance}' +
 			'{.repeated section forward}' +
 				'<h4>{@|relation-name} {work|work-link}</h4>' +
+				'{.section work}{.section groupedRelations}' +
+					'<div class="credits">' +
+					'{.section artist}' +
+						'{.section writer}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+						'{.section composer}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+						'{.section lyricist}{.repeated section backward}' +
+							'<div>{@|relation-name}: {artist|artist-link}</div>' +
+						'{.end}{.end}' +
+					'{.end}' +
+					'</div>' + 
+				'{.end}{.end}' +
+			'{.end}' +
+		'{.end}{.end}' +
+		'{.section work}{.section medley}' +
+			'<h4>Medley</h4>' +
+			'{.repeated section forward}' +
+				'<h5>{@|relation-name} {work|work-link}</h5>' +
 				'{.section work}{.section groupedRelations}' +
 					'<div class="credits">' +
 					'{.section artist}' +
