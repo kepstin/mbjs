@@ -1,0 +1,28 @@
+{
+  "name": "mbjs-ember",
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "ember": "~1.5",
+    "ember-data": "~1.0.0-beta.4"
+  },
+  "exportsOverride": {
+    "bootstrap": {
+      "fonts": "fonts/*",
+      "js": "dist/js/bootstrap.js",
+      "less": "less/*.less",
+      "less/mixins": "less/mixins/*.less"
+    },
+    "ember": {
+      "js": [ "ember.js", "ember.prod.js", "ember.min.js" ]
+    },
+    "ember-data": {
+      "js": [ "ember-data.js", "ember-data.prod.js", "ember-data.min.js" ]
+    },
+    "handlebars": {
+      "js": [ "handlebars.js", "handlebars.amd.js", "handlebars.runtime.js", "handlebars.runtime.amd.js" ]
+    },
+    "jquery": {
+      "js": [ "dist/jquery.js", "dist/jquery.min.js", "dist/jquery.min.map" ]
+    }
+  }
+}
