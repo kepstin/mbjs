@@ -32,6 +32,7 @@
 @bg-alt: @base03;
 
 // Dark theme
+/*
 @bg: @base03;
 @bg-hl: @base02;
 @fg: @base0;
@@ -40,6 +41,7 @@
 @fg-alt: @base00;
 @bg-alt-hl: @base2;
 @bg-alt: @base3;
+*/
 
 @fg-dim: @fg-alt-hl;
 @fg-alt-dim: @fg-hl;
@@ -182,8 +184,8 @@
 
 @btn-font-weight:                normal;
 
-@btn-default-color:              @bg;
-@btn-default-bg:                 @fg;
+@btn-default-color:              @fg-hl;
+@btn-default-bg:                 @bg-hl;
 @btn-default-border:             mix(@btn-default-bg, @bg-alt, 85%);
 
 @btn-primary-color:              @bg;
@@ -377,7 +379,8 @@
 
 // Basics of a navbar
 @navbar-height:                    50px;
-@navbar-margin-bottom:             @line-height-computed;
+//@navbar-margin-bottom:             @line-height-computed;
+@navbar-margin-bottom: 0;
 @navbar-border-radius:             @border-radius-base;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
@@ -402,9 +405,9 @@
 @navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
-@navbar-default-toggle-hover-bg:           #ddd;
-@navbar-default-toggle-icon-bar-bg:        #888;
-@navbar-default-toggle-border-color:       #ddd;
+@navbar-default-toggle-hover-bg:           @navbar-default-link-active-bg;
+@navbar-default-toggle-icon-bar-bg:        @navbar-default-link-color;
+@navbar-default-toggle-border-color:       @navbar-default-border;
 
 
 // Inverted navbar
@@ -431,6 +434,9 @@
 @navbar-inverse-toggle-hover-bg:            #333;
 @navbar-inverse-toggle-icon-bar-bg:         #fff;
 @navbar-inverse-toggle-border-color:        #333;
+@navbar-inverse-toggle-hover-bg:            @navbar-inverse-link-active-bg;
+@navbar-inverse-toggle-icon-bar-bg:         @navbar-inverse-link-color;
+@navbar-inverse-toggle-border-color:        @navbar-inverse-border;
 
 
 //== Navs

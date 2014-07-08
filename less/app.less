@@ -3,3 +3,19 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 
 @import "local-bootstrap";
+
+.inverse {
+  color: @fg-alt;
+  background-color: @bg-alt;
+  a:hover, a:focus  {
+    color: mix(@link-color, @bg, 85%);
+  }
+  b, strong {
+    color: @fg-alt-hl;
+  }
+}
+
+header {
+  .inverse;
+  padding: @padding-base-vertical 0;
+}
