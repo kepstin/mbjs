@@ -1,29 +1,36 @@
-<h1>{{#link-to 'artist' id}}{{name}}{{/link-to}}</h1>
-<p>
-<b>{{#if type}}{{type}}{{else}}Artist{{/if}}</b>
-{{~#if lifeSpan.begin~}}
-  , began <b>{{lifeSpan.begin}}</b>
-  {{~#if beginArea}}
-    in <b>{{#link-to 'area' beginArea}}{{beginArea.name}}{{/link-to}}</b>
+<header>
+  <h1>{{#link-to 'artist' id}}{{name}}{{/link-to}}</h1>
+  <p>
+  <b>{{#if type}}{{type}}{{else}}Artist{{/if}}</b>
+  {{~#if lifeSpan.begin~}}
+    , began <b>{{lifeSpan.begin}}</b>
+    {{~#if beginArea}}
+      in <b>{{#link-to 'area' beginArea}}{{beginArea.name}}{{/link-to}}</b>
+    {{~/if~}}
+  {{~else~}}
+    {{~#if beginArea~}}
+      , began in <b>{{#link-to 'area' beginArea}}{{beginArea.name}}{{/link-to}}</b>
+    {{~/if~}}
   {{~/if~}}
-{{~else~}}
-  {{~#if beginArea~}}
-    , began in <b>{{#link-to 'area' beginArea}}{{beginArea.name}}{{/link-to}}</b>
+  {{~#if lifeSpan.ended~}}
+    , ended
+    {{~#if lifeSpan.end}}
+      <b>{{lifeSpan.end}}</b>
+    {{~/if~}}
+    {{~#if endArea}}
+      in <b>{{#link-to 'area' endArea}}{{endArea.name}}{{/link-to}}</b>
+    {{~/if~}}
   {{~/if~}}
-{{~/if~}}
-{{~#if lifeSpan.ended~}}
-  , ended
-  {{~#if lifeSpan.end}}
-    <b>{{lifeSpan.end}}</b>
-  {{~/if~}}
-  {{~#if endArea}}
-    in <b>{{#link-to 'area' endArea}}{{endArea.name}}{{/link-to}}</b>
-  {{~/if~}}
-{{~/if~}}
-.
-{{#if area}}From <b>{{#link-to 'area' area}}{{area.name}}{{/link-to}}</b>.{{/if}}
-</p>
+  .
+  {{#if area}}From <b>{{#link-to 'area' area}}{{area.name}}{{/link-to}}</b>.{{/if}}
+  </p>
+</header>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Release Groups</a></li>
+  <li><a href="#">Recordings</a></li>
+  <li><a href="#">Works</a></li>
+</ul>
 <h2>Discography</h2>
 {{#each releaseGroups}}
-<p>Release Group: {{title}}</p>
+<p>{{#if primaryType}}{{primaryType}}{{else}}Release Group{{/if}}: {{title}}</p>
 {{/each}}

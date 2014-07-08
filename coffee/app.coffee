@@ -5,6 +5,7 @@ window.MBJS = Ember.Application.create
 
 incParameters =
   artist: 'aliases+tags+ratings+artist-rels+label-rels+url-rels'
+  releaseGroup: 'artist-credits'
 
 nextId = 0
 generateId = -> nextId++
@@ -22,7 +23,6 @@ MBJS.ApplicationAdapter = DS.RESTAdapter.extend
     query = attrs.query
     query['inc'] = incParameters[attrs.typeKey]
     this.ajax(url, 'GET', data:query)
-    
 
 MBJS.ApplicationSerializer = DS.RESTSerializer.extend
   typeForRoot: (key) ->
@@ -66,10 +66,13 @@ MBJS.ApplicationSerializer = DS.RESTSerializer.extend
     delete payload['release-group-count']
     this._super(store, type, payload)
   attrs:
+    artistCredt: 'artist-credit'
     sortName: 'sort-name'
     beginArea: 'begin_area'
     endArea: 'end_area'
+    firstReleaseDate: 'first-release-date'
     lifeSpan: 'life-span'
+    primaryType: 'primary-type'
     releaseGroups: 'release-groups'
     releaseGroup: 'release-group'
     
