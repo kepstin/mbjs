@@ -1,0 +1,10 @@
+MBJS.Artist = DS.Model.extend
+  area: DS.belongsTo('area')
+  beginArea: DS.belongsTo('area')
+  endArea: DS.belongsTo('area')
+  lifeSpan: DS.belongsTo('lifeSpan')
+  name: DS.attr('string')
+  sortName: DS.attr('string')
+  type: DS.attr('string')
+  recordings: DS.hasMany('recording', async: true)
+  releaseGroups: DS.hasMany('releaseGroup', async: true)
