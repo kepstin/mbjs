@@ -17,27 +17,28 @@
 @import "buttons.less";
 
 // Components
-@import "component-animations.less";
-@import "dropdowns.less";
-@import "button-groups.less";
-@import "input-groups.less";
-@import "navs.less";
-@import "navbar.less";
-@import "breadcrumbs.less";
-@import "pagination.less";
-@import "pager.less";
-@import "labels.less";
-@import "badges.less";
-@import "jumbotron.less";
-@import "thumbnails.less";
-@import "alerts.less";
-@import "progress-bars.less";
-@import "media.less";
-@import "list-group.less";
-@import "panels.less";
-@import "responsive-embed.less";
-@import "wells.less";
-@import "close.less";
+// Import all the components by reference only
+@import (reference) "component-animations.less";
+@import (reference) "dropdowns.less";
+@import (reference) "button-groups.less";
+@import (reference) "input-groups.less";
+@import (reference) "navs.less";
+@import (reference) "navbar.less";
+@import (reference) "breadcrumbs.less";
+@import (reference) "pagination.less";
+@import (reference) "pager.less";
+@import (reference) "labels.less";
+@import (reference) "badges.less";
+@import (reference) "jumbotron.less";
+@import (reference) "thumbnails.less";
+@import (reference) "alerts.less";
+@import (reference) "progress-bars.less";
+@import (reference) "media.less";
+@import (reference) "list-group.less";
+@import (reference) "panels.less";
+@import (reference) "responsive-embed.less";
+@import (reference) "wells.less";
+@import (reference) "close.less";
 
 // Components w/ JavaScript
 //@import "modals.less";
@@ -49,70 +50,15 @@
 @import "utilities.less";
 @import "responsive-utilities.less";
 
-//@import "theme.less";
+// Pull in the solarized colors
+@import "solarized";
+
+// Local overrides
+@import "local-variables";
+
+// Local theme
+@import "local-theme";
 
 b, strong { color: @fg-hl; }
 i, em { color: @fg-hl; }
 
-//
-// Buttons
-// --------------------------------------------------
-
-// Common styles
-.btn-default,
-.btn-primary,
-.btn-success,
-.btn-info,
-.btn-warning,
-.btn-danger {
-  @shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
-  .box-shadow(@shadow);
-
-  // Reset the shadow
-  &:active,
-  &.active {
-    .box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
-  }
-}
-
-// Mixin for generating new styles
-.btn-styles(@btn-color: #555) {
-  #gradient > .vertical(@start-color: mix(@btn-color, @bg, 85%); @end-color: @btn-color);
-  .reset-filter(); // Disable gradients for IE9 because filter bleeds through rounded corners
-  background-repeat: repeat-x;
-
-  &:hover,
-  &:focus  {
-    background-color: darken(@btn-color, 12%);
-    background-position: 0 -15px;
-  }
-
-  &:active,
-  &.active {
-    background-color: darken(@btn-color, 12%);
-    border-color: darken(@btn-color, 14%);
-  }
-
-  &:disabled,
-  &[disabled] {
-    background-color: darken(@btn-color, 12%);
-    background-image: none;
-  }
-}
-
-// Common styles
-.btn {
-  // Remove the gradient for the pressed/active state
-  &:active,
-  &.active {
-    background-image: none;
-  }
-}
-
-// Apply the mixin to the buttons
-.btn-default { .btn-styles(@btn-default-bg); }
-.btn-primary { .btn-styles(@btn-primary-bg); }
-.btn-success { .btn-styles(@btn-success-bg); }
-.btn-info    { .btn-styles(@btn-info-bg); }
-.btn-warning { .btn-styles(@btn-warning-bg); }
-.btn-danger  { .btn-styles(@btn-danger-bg); }

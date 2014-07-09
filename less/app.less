@@ -4,7 +4,7 @@
 
 @import "local-bootstrap";
 
-.inverse {
+.invert() {
   color: @fg-alt;
   background-color: @bg-alt;
   a:hover, a:focus  {
@@ -15,7 +15,37 @@
   }
 }
 
-header {
-  .inverse;
+// Navbar stuff
+#primary-navbar, #secondary-navbar {
+  &:extend(.navbar all);
+  &:extend(.navbar-static-top all);
+}
+#primary-navbar:extend(.navbar-default all) {}
+#secondary-navbar:extend(.navbar-inverse all) {}
+#primary-navbar header {
+  &:extend(.navbar-header all);
+}
+#primary-navbar-collapse {
+  &:extend(.navbar-collapse all);
+}
+#primary-navbar-search {
+  &:extend(.navbar-form all);
+  &:extend(.navbar-right all);
+}
+#primary-navbar ul, #secondary-navbar ul {
+  &:extend(.nav all);
+  &:extend(.navbar-nav all);
+}
+.navbar-brand:extend(.navbar-brand all) {}
+.navbar-toggle:extend(.navbar-toggle all) {}
+.collapse:extend(.collapse all) {}
+
+#primary-header {
+  .invert();
   padding: @padding-base-vertical 0;
+}
+
+#primary-content {
+  &:extend(.container all);
+  margin-top: @line-height-computed;
 }
