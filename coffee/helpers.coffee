@@ -18,6 +18,6 @@ parseURL = (url) ->
     file: a.pathname.match(/\/([^\/?#]+)$/i)?[1] ? ''
     hash: a.hash.replace('#', '')
     path: a.pathname.replace(/^([^\/])/,'/$1')
-    relative: a.href.match(tps?:\/\/[^\/]+(.+)/)?[1] ? ''
-    segments: a.pathname.replace(/^///,'').split('/')
+    relative: a.href.match(/tps?:\/\/[^\/]+(.+)/)?[1] ? ''
+    segments: a.pathname.replace(/^\//,'').split('/')
   }
